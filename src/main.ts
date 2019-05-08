@@ -6,6 +6,7 @@ import '@/assets/scss/index.scss';
 
 import 'muse-ui-message/dist/muse-ui-message.css';
 import 'muse-ui/dist/muse-ui.css';
+/* tslint:disable */
 import Message from 'muse-ui-message';
 import MuseUI from 'muse-ui';
 import Toast from 'muse-ui-toast';
