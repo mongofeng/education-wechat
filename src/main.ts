@@ -2,12 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-
-import Vant from 'vant';
-import 'vant/lib/index.css';
 import '@/assets/scss/index.scss';
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
 
-Vue.use(Vant);
+Vue.use(MuseUI);
 
 Vue.config.productionTip = false;
 

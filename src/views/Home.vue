@@ -1,12 +1,13 @@
 <template>
   <div class="home">
     <router-view/>
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o" to="personal">home</van-tabbar-item>
-      <van-tabbar-item icon="search" dot to="course">course</van-tabbar-item>
-      <!-- <van-tabbar-item icon="friends-o" info="5">标签</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" info="20">标签</van-tabbar-item> -->
-    </van-tabbar>
+    <mu-container>
+      <mu-bottom-nav>
+        <mu-bottom-nav-item title="home" icon="restore" to="personal"></mu-bottom-nav-item>
+        <mu-bottom-nav-item title="course" icon="favorite" to="course"></mu-bottom-nav-item>
+        <!-- <mu-bottom-nav-item title="Nearby" icon="location_on"></mu-bottom-nav-item> -->
+      </mu-bottom-nav>
+    </mu-container>
   </div>
 </template>
 
