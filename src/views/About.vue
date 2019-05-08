@@ -37,8 +37,14 @@ export default class About extends Vue {
   };
 
   public submit() {
-    this.$refs.form.validate().then((result: boolean) => {
+    this.$refs.form.validate().then(async (valid: boolean) => {
       // console.log("form valid: ", result);
+      const {result} = await this.$confirm('Hello world ?', {
+        title: '信息',
+      });
+      if (result) {
+        this.$toast.success('绑定成功');
+      }
     });
   }
 }
