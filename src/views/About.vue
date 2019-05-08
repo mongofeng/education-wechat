@@ -15,8 +15,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-// tslint:disable-next-line
-import { Form as FormProps } from 'muse-ui';
+
 interface IForm {
   phone: string;
 }
@@ -27,7 +26,7 @@ export default class About extends Vue {
      * 表单
      */
     // tslint:disable-next-line
-    form: FormProps;
+    form: any;
   };
 
   private phoneRules: any[] = [
