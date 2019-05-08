@@ -16,6 +16,7 @@ export default class About extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+// @import '~@/assets/scss/utils.scss';
 .about {
   margin: 0 auto;
   width: 90%;
