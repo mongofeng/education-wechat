@@ -1,0 +1,34 @@
+
+{
+  "workbench.iconTheme": "vscode-great-icons",
+  "editor.fontSize": 16,
+  "editor.tabSize": 2,
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  // 控制编辑器是否应呈现缩进参考线
+  "editor.renderIndentGuides": true,
+  "path-intellisense.extensionOnImport": true,
+  "path-intellisense.showHiddenFiles": true,
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  // "editor.formatOnSave": true,
+  "window.zoomLevel": 0,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDelete": false,
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+  "gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+  },
+  "tslint.enable": true,
+  "tslint.typeCheck": true, 
+  "tslint.autoFixOnSave": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
+}

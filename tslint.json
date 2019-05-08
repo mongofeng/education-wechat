@@ -8,6 +8,7 @@
       "node_modules/**"
     ]
   },
+  "autoFixOnSave": true,
   "rules": {
     "quotemark": [true, "single"],
     "indent": [true, "spaces", 2],
