@@ -5,6 +5,7 @@ import store from './store';
 
 import Vant from 'vant';
 import 'vant/lib/index.css';
+import '@/assets/scss/index.scss';
 
 Vue.use(Vant);
 
