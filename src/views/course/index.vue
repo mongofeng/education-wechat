@@ -1,67 +1,90 @@
 <template>
   <div class="education-warper bg">
-    <mu-container>
-      <mu-paper :z-depth="1">
-        <mu-data-table :loading="loading" :columns="columns" :data="list">
-          <template slot-scope="scope">
-            <td>{{scope.row.name}}</td>
-            <td class="is-right">{{scope.row.calories}}</td>
-            <td class="is-right">{{scope.row.fat}}</td>
-            <td class="is-right">{{scope.row.carbs}}</td>
-          </template>
-        </mu-data-table>
-      </mu-paper>
-    </mu-container>
+    <cube-scroll-nav
+      :side="true"
+      :data="data"
+      :current="current"
+      @change="changeHandler"
+      @sticky-change="stickyChangeHandler">
+      <cube-scroll-nav-panel
+        v-for="item in data"
+        :key="item.name"
+        :label="item.name"
+        :title="item.name">
+        <ul>
+          <li v-for="food in item.foods" :key="food.name">
+            <div>
+              <img :src="food.icon">
+              <p>{{food.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </cube-scroll-nav-panel>
+    </cube-scroll-nav>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import goodsData from '@/data/good.json';
+const goods = goodsData.goods;
 @Component
 export default class Course extends Vue {
   private loading: boolean = false;
 
-  private columns: any[] = [
-    { title: 'Dessert (100g serving)', name: 'name' },
-    { title: 'Calories', name: 'calories', align: 'center' },
-    { title: 'Fat (g)', name: 'fat', align: 'center' },
-    { title: 'Carbs (g)', name: 'carbs', align: 'center' },
-  ];
+  private data: any[] = goods;
+  private current: string = goods[3].name;
 
-  private list: any[] = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      iron: 1,
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      iron: 1,
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      iron: 7,
-    },
-  ];
-}
-</script>
-<style lang="scss">
-.demo-text {
-  padding: 16px;
-  background: #fff;
-  p {
-    margin: 8px 0;
+  private changeHandler(label: string) {
+    console.log('changed to:', label);
+  }
+  private stickyChangeHandler(current: any) {
+    console.log('sticky-change', current);
   }
 }
+</script>
+<style lang="stylus">
+.prepend-header
+  width: 90%
+  margin: 20px auto
+  text-align: center
+  font-size: 20px
+  line-height: 1.6
+  border-radius: 2px
+  box-shadow: 0 0 4px rgba(0, 0, 0, .2)
+.cube-scroll-nav-main
+  background-color: #efeff4
+.cube-sticky-fixed
+  background-color: #efeff4
+.cube-scroll-nav-bar
+  width: 120px
+  background-color: transparent
+.cube-scroll-nav-bar-item
+  padding: 15px
+.cube-scroll-nav-bar-item_active
+  background-color: #fff
+.cube-scroll-nav-panels
+  background-color: #fff
+.cube-scroll-nav-panel
+  img
+    width: 114px
+    height: 114px
+  ul
+    overflow: hidden
+    font-size: 14px
+    line-height: 1.4
+    color: #666
+  li
+    float: left
+    width: 50%
+    div
+      width: 114px
+      margin: auto
+      p
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+.cube-scroll-nav-panel-title
+  padding: 15px
+  font-size: 16px
+  background-color: #fff
 </style>
