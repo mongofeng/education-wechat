@@ -1,7 +1,6 @@
 <template>
   <div class="education-warper bg warp-direction">
-    <mu-card-header title="课程中心" class="bg-white mb20"></mu-card-header>
-
+    <div class="title mb20 bg-white">课程中心</div>
     <div class="warp-direction__scroller">
       <mu-expansion-panel :expand="true">
         <div slot="header">Panel 1</div>
@@ -43,9 +42,6 @@
         </div>
       </mu-expansion-panel>
 
-      <mu-expansion-panel :expand="true">
-        <div slot="header">Panel 3</div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-      </mu-expansion-panel>
     </div>
   </div>
 </template>

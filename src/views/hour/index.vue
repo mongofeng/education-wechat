@@ -77,15 +77,6 @@ export default class Hour extends Vue {
 }
 </script>
  <style lang="scss" scoped>
-
- .title {
-   font-size: 15px;
-   text-align: center;
-  padding: 16px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.87);
-  box-shadow: $box-shadow;
- }
  .grid-cell {
    width: 100%;
    text-align: center;
