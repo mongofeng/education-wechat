@@ -6,6 +6,7 @@ import Home from './views/Home.vue';
 // which is lazy-loaded when the route is visited.
 const Personal = () => import (/* webpackChunkName: "personal" */ '@/views/personal/index.vue');
 const Course = () => import (/* webpackChunkName: "course" */ '@/views/course/index.vue');
+const Hour = () => import (/* webpackChunkName: "hour" */ '@/views/hour/index.vue');
 const About = () => import (/* webpackChunkName: "about" */ './views/About.vue');
 
 Vue.use(Router);
@@ -16,7 +17,7 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
-      redirect: '/personal',
+      redirect: '/hour',
       children: [
         {
           path: 'personal',
@@ -27,6 +28,11 @@ export default new Router({
           path: 'course',
           name: 'course',
           component: Course,
+        },
+        {
+          path: 'hour',
+          name: 'hour',
+          component: Hour,
         },
       ],
     },

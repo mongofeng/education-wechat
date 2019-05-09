@@ -29,7 +29,7 @@ export default class About extends Vue {
     form: any;
   };
 
-public phoneRules: any[] = [
+  public phoneRules: any[] = [
     { validate: (val: string) => !!val, message: '必须填写手机号码' },
     { validate: (val: string) => val.length >= 3, message: '用户名长度大于3' },
   ];
@@ -38,13 +38,13 @@ public phoneRules: any[] = [
   };
 
   public submit() {
-    this .$refs.form.validate().then(async (valid: boolean) => {
+    this.$refs.form.validate().then(async (valid: boolean) => {
       // console.log("form valid: ", result);
-      const {result} = await this .$confirm('Hello world ?', {
+      const { result } = await this.$confirm('Hello world ?', {
         title: '信息',
       });
       if (result) {
-        this .$toast.success('绑定成功');
+        this.$toast.success('绑定成功');
       }
     });
   }

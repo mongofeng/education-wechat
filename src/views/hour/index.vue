@@ -1,7 +1,7 @@
 <template>
   <mu-container>
     <mu-grid-list :cols="3">
-        <mu-sub-header>December</mu-sub-header>
+        <mu-sub-header>课时统计</mu-sub-header>
         <mu-grid-tile v-for="(item, index) in list" :key="index">
           <!-- <img :src="tile.image" > -->
           <span slot="title">{{item.title}}</span>
@@ -17,16 +17,16 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Personal extends Vue {
+export default class Hour extends Vue {
   private list: any[] = [{
-      title: 'Breakfast',
-      author: 'Myron',
+      title: '已用',
+      author: '0',
     }, {
-      title: 'Burger',
-      author: 'Linyu',
+      title: '总计',
+      author: '12',
     }, {
-      title: 'Camera',
-      author: 'ruolin',
+      title: '剩余',
+      author: '12',
     }];
 }
 </script>
