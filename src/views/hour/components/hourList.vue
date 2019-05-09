@@ -14,9 +14,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-const num: number[] = []
+const num: number[] = [];
 for (let i = 1; i < 10; i++) {
-  num.push(i)
+  num.push(i);
 }
 
 @Component
