@@ -1,5 +1,5 @@
 <template>
-  <mu-container ref="container" class="content">
+  <mu-container ref="container" class="warp-direction__scroller">
     <mu-load-more :loading="loading" @load="load">
       <mu-list>
         <template v-for="i in num">
@@ -40,9 +40,4 @@ export default class HourList extends Vue {
  }
 </script>
 <style lang="scss" scoped>
-.content {
-  flex: 1;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
 </style>

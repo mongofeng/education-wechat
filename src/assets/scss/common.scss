@@ -22,6 +22,16 @@ body,
   color: #2c3e50;
 }
 
+.warp-direction {
+  display: flex;
+  flex-direction: column;
+  &__scroller {
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 .education-warper {
   width: 100%;
   height: 100%;

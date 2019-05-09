@@ -27,14 +27,6 @@ export default class Home extends Vue {
 
   private menu: view.IMenu[] = [
     {
-      title: '个人中心',
-      name: 'personal',
-      icon: 'restore',
-      path: {
-        name: 'personal',
-      },
-    },
-    {
       title: '课程表',
       name: 'course',
       icon: 'favorite',
@@ -48,6 +40,14 @@ export default class Home extends Vue {
       icon: 'location_on',
       path: {
         name: 'hour',
+      },
+    },
+    {
+      title: '个人中心',
+      name: 'personal',
+      icon: 'restore',
+      path: {
+        name: 'personal',
       },
     },
   ];

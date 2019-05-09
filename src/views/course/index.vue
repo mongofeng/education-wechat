@@ -1,17 +1,52 @@
 <template>
-  <div class="education-warper bg">
-    <mu-container>
-      <mu-paper :z-depth="1">
-        <mu-data-table :loading="loading" :columns="columns" :data="list">
-          <template slot-scope="scope">
-            <td>{{scope.row.name}}</td>
-            <td class="is-right">{{scope.row.calories}}</td>
-            <td class="is-right">{{scope.row.fat}}</td>
-            <td class="is-right">{{scope.row.carbs}}</td>
-          </template>
-        </mu-data-table>
-      </mu-paper>
-    </mu-container>
+  <div class="education-warper bg warp-direction">
+    <mu-card-header title="课程中心" class="bg-white mb20"></mu-card-header>
+
+    <div class="warp-direction__scroller">
+      <mu-expansion-panel :expand="true">
+        <div slot="header">Panel 1</div>
+        <div class="demo-paper">
+          <div>上午</div>
+          <div>暂无课程</div>
+        </div>
+
+        <div class="demo-paper">
+          <div>上午</div>
+          <div>英语、数学</div>
+          <div>12:00 - 13:00</div>
+        </div>
+
+        <div class="demo-paper">
+          <div>上午</div>
+          <div>暂无课程</div>
+        </div>
+      </mu-expansion-panel>
+
+      <mu-expansion-panel :expand="true">
+        <div slot="header">Panel 2</div>
+        <div class="demo-paper">
+          <div>上午</div>
+          <div>英语、数学</div>
+          <div>12:00 - 13:00</div>
+        </div>
+
+        <div class="demo-paper">
+          <div>中午</div>
+          <div>英语、数学</div>
+          <div>12:00 - 13:00</div>
+        </div>
+
+        <div class="demo-paper">
+          <div>晚上</div>
+          <div>英语、数学</div>
+          <div>12:00 - 13:00</div>
+        </div>
+      </mu-expansion-panel>
+
+      <mu-expansion-panel :expand="true">
+        <div slot="header">Panel 3</div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+      </mu-expansion-panel>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -57,11 +92,11 @@ export default class Course extends Vue {
 }
 </script>
 <style lang="scss">
-.demo-text {
-  padding: 16px;
-  background: #fff;
-  p {
-    margin: 8px 0;
-  }
+.demo-paper {
+  display: table-cell;
+  height: 100px;
+  width: 100px;
+  margin: 20px;
+  text-align: center;
 }
 </style>

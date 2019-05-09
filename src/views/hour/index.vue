@@ -1,16 +1,17 @@
 <template>
-  <mu-container class="education-warper warp">
-    <h2 class="title pt10 pl10">学时统计</h2>
+  <div class="education-warper warp-direction">
+    <div class="title mb20 bg-white">学时统计</div>
     <!-- 统计栏 -->
-    <mu-row gutter class="grid-warp">
-      <mu-col span="4" v-for="(item, index) in list" :key="index" class="p10">
-        <div class="grid-cell">
-          <div class="grid-cell__title pt10 pb10">{{item.title}}</div>
-          <div class="grid-cell__count pb10">{{item.total}}</div>
-        </div>
-      </mu-col>
-    </mu-row>
-
+    <mu-container>
+      <mu-row gutter class="grid-warp">
+        <mu-col span="4" v-for="(item, index) in list" :key="index" class="p10">
+          <div class="grid-cell">
+            <div class="grid-cell__title pt10 pb10">{{item.title}}</div>
+            <div class="grid-cell__count pb10">{{item.total}}</div>
+          </div>
+        </mu-col>
+      </mu-row>
+    </mu-container>
     <!-- tab栏 -->
     <mu-tabs 
       :value.sync="active" 
@@ -29,7 +30,7 @@
     </mu-tabs>
 
     <router-view/>
-  </mu-container>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
@@ -76,18 +77,15 @@ export default class Hour extends Vue {
 }
 </script>
  <style lang="scss" scoped>
- .warp {
-   display: flex;
-    flex-direction: column;
- }
+
  .title {
-   margin: 0;
-   font-size: 14px;
+   font-size: 15px;
    text-align: center;
+  padding: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: $box-shadow;
  }
-//  .grid-warp {
-//    background: $bg-color;
-//  }
  .grid-cell {
    width: 100%;
    text-align: center;
