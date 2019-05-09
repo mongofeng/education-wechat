@@ -29,7 +29,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Course extends Vue {
-  private active: number = 0;
+  public active: number = 0;
 }
 </script>
 <style lang="scss">
