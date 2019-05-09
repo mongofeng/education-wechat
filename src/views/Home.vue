@@ -9,8 +9,8 @@
           :icon="item.icon" 
           :to="item.path" 
           :replace="true"
-          :key="item.path" 
-          :value="item.path">
+          :key="item.name" 
+          :value="item.name">
         </mu-bottom-nav-item>
     </mu-bottom-nav>
     </div>
@@ -19,37 +19,46 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-interface IMenu {
-    title: string;
-    icon: string;
-    path: string;
-  }
+import * as view from '@/const/type/view';
+
 @Component
 export default class Home extends Vue {
   private active: string = 'personal';
 
-  private menu: IMenu[] = [
+  private menu: view.IMenu[] = [
     {
       title: '个人中心',
-      path: 'personal',
+      name: 'personal',
       icon: 'restore',
+      path: {
+        name: 'personal',
+      },
     },
     {
       title: '课程表',
-      path: 'course',
+      name: 'course',
       icon: 'favorite',
+      path: {
+        name: 'course',
+      },
     },
     {
       title: '课时统计',
-      path: 'hour',
+      name: 'hour',
       icon: 'location_on',
+      path: {
+        name: 'hour',
+      },
     },
   ];
 
-  @Watch('$route.name', {immediate: true})
+  @Watch('$route.path', {immediate: true})
   public onChanged(val: string) {
-    if (val === this.active) { return; }
-    this.active = val;
+    const arr = val.split('/');
+    if (!arr.length || !arr[1]) { return; }
+    if (arr[1] === this.active) { return; }
+
+    this.active = arr[1];
   }
 }
 </script>

@@ -35,13 +35,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-interface ITab {
-    title: string;
-    path: {
-      name: string,
-    };
-    name: string;
-  }
+import * as view from '@/const/type/view';
+
+type ITab = Omit<view.IMenu, 'icon'>;
 @Component
 export default class Hour extends Vue {
   private active: string = 'all';
