@@ -1,17 +1,15 @@
 <template>
   <mu-container class="education-warper warp">
+    <h2 class="title pt10 pl10">学时统计</h2>
     <!-- 统计栏 -->
-    <mu-grid-list :cols="3" :cell-height="70">
-      <mu-sub-header>课时统计</mu-sub-header>
-      <mu-grid-tile v-for="(item, index) in list" :key="index">
-        <!-- <img :src="tile.image" > -->
-        <span slot="title">{{item.title}}</span>
-        <span slot="subTitle">by <b>{{item.author}}</b></span>
-        <mu-button slot="action" icon>
-          <mu-icon value="star_border"></mu-icon>
-        </mu-button>
-      </mu-grid-tile>
-    </mu-grid-list>
+    <mu-row gutter class="grid-warp">
+      <mu-col span="4" v-for="(item, index) in list" :key="index" class="p10">
+        <div class="grid-cell">
+          <div class="grid-cell__title pt10 pb10">{{item.title}}</div>
+          <div class="grid-cell__count pb10">{{item.total}}</div>
+        </div>
+      </mu-col>
+    </mu-row>
 
     <!-- tab栏 -->
     <mu-tabs 
@@ -43,13 +41,13 @@ export default class Hour extends Vue {
   private active: string = 'all';
   private list: any[] = [{
       title: '已用',
-      author: '0',
+      total: '0',
     }, {
       title: '总计',
-      author: '12',
+      total: '12',
     }, {
       title: '剩余',
-      author: '12',
+      total: '12',
     }];
 
   private menu: ITab[] = [
@@ -82,5 +80,29 @@ export default class Hour extends Vue {
    display: flex;
   flex-direction: column;
  }
+ .title {
+   margin: 0;
+   font-size: 14px;
+   text-align: center;
+ }
+//  .grid-warp {
+//    background: $bg-color;
+//  }
+ .grid-cell {
+   width: 100%;
+   text-align: center;
+   box-shadow: $box-shadow; 
+   border-radius: 10px;
+   &__title {
+     font-size: 12px;
+     color: #333;
+     
+   }
+   &__count {
+     font-size: 24px;
+    //  font-weight: bold;
+   }
+ }
+
  </style>
  
