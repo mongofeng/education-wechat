@@ -58,6 +58,7 @@ export default class Home extends Vue {
   height: 100%;
   box-sizing: border-box;
   padding-bottom: 56px;
+  overflow: hidden;
 }
 .nav {
   position: fixed;
@@ -65,6 +66,7 @@ export default class Home extends Vue {
   bottom: 0;
   left: 0;
   z-index: 2;
+  box-shadow: $box-shadow;
 }
 </style>
 
