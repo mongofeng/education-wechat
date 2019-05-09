@@ -1,4 +1,6 @@
+// vue.config.js
 module.exports = {
+  // options...
   css: {
     loaderOptions: {
       sass: {
@@ -6,18 +8,6 @@ module.exports = {
         // 但在被import的文件里面不会的
         data: `@import '@/assets/scss/variable.scss';`
       },
-      stylus: {
-        'resolve url': true,
-        'import': [
-          './src/theme'
-        ]
-      }
-    }
-  },
-  pluginOptions: {
-    'cube-ui': {
-      postCompile: true,
-      theme: true
     }
   }
 }
