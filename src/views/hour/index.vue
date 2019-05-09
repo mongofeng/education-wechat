@@ -78,7 +78,7 @@ export default class Hour extends Vue {
  <style lang="scss" scoped>
  .warp {
    display: flex;
-  flex-direction: column;
+    flex-direction: column;
  }
  .title {
    margin: 0;

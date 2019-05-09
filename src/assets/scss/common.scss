@@ -27,3 +27,11 @@ body,
   height: 100%;
   overflow: hidden;
 }
+
+.bg {
+  background: $bg-color;
+}
+
+.bg-white {
+  background: #fff;
+}
