@@ -13,7 +13,8 @@
       </mu-row>
     </mu-container>
     <!-- tab栏 -->
-    <mu-tabs 
+    <mu-tabs
+      @hook:updated="pudate" 
       :value.sync="active" 
       inverse 
       color="secondary" 
@@ -74,6 +75,17 @@ export default class Hour extends Vue {
       },
     },
   ];
+
+
+  public async mounted() {
+    this.$once('hook:beforeDestroy', () => {
+      console.log('destory');
+    });
+  }
+
+  public pudate() {
+    console.log(1111);
+  }
 }
 </script>
  <style lang="scss" scoped>
