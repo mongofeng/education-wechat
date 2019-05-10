@@ -10,6 +10,10 @@ import 'muse-ui/dist/muse-ui.css';
 import Message from 'muse-ui-message';
 import MuseUI from 'muse-ui';
 import Toast from 'muse-ui-toast';
+
+import getOauth2 from '@/utils/oauth2';
+getOauth2();
+
 Vue.use(Toast, {
   position: 'top',
 });
