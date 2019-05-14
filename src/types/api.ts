@@ -26,9 +26,6 @@ export type ApiListData<T> = ApiResponse<{
  */
 export type IApiList<T> = (params: any) => ApiListData<T>;
 
-// The parameters `x` and `y` have the type number
-// const myAdd: (baseValue: number, increment: number) => number
-// = (x, y) => x + y;
 
 /**
  * 更新表单的函数
