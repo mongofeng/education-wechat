@@ -20,7 +20,7 @@ interface IForm {
   phone: string;
 }
 @Component
-export default class About extends Vue {
+export default class Register extends Vue {
   public $refs!: {
     /**
      * 表单

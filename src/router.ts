@@ -10,11 +10,13 @@ const Course = () => import (/* webpackChunkName: "course" */ '@/views/course/in
 const Hour = () => import (/* webpackChunkName: "hour" */ '@/views/hour/index.vue');
 const HourList = () => import (/* webpackChunkName: "hour" */ '@/views/hour/components/hourList.vue');
 
-const About = () => import (/* webpackChunkName: "about" */ './views/About.vue');
+
+const Register = () => import (/* webpackChunkName: "register" */ '@/views/register/index.vue');
+
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -27,16 +29,25 @@ export default new Router({
         {
           path: 'personal',
           name: 'personal',
+          meta: {
+            title: '个人中心',
+          },
           component: Personal,
         },
         {
           path: 'course',
           name: 'course',
+          meta: {
+            title: '课程中心',
+          },
           component: Course,
         },
         {
           path: 'hour',
           name: 'hour',
+          meta: {
+            title: '课时列表',
+          },
           component: Hour,
           redirect: {
             name: 'all',
@@ -62,9 +73,21 @@ export default new Router({
       ],
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About,
+      path: '/register',
+      name: 'register',
+      meta: {
+        title: '绑定用户',
+      },
+      component: Register,
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta && to.meta.title && to.meta.title !== document.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
+
+export default router;
