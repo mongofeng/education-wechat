@@ -1,6 +1,5 @@
 
 {
-  "workbench.iconTheme": "vscode-great-icons",
   "editor.fontSize": 16,
   "editor.tabSize": 2,
   "emmet.syntaxProfiles": {
@@ -25,7 +24,6 @@
     "suppressShowKeyBindingsNotice": true
   },
   "tslint.enable": true,
-  "tslint.typeCheck": true, 
   "tslint.autoFixOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
