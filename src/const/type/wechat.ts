@@ -4,4 +4,5 @@ export interface ICode {
 
 export interface IOpenId {
   openid: string;
+  access_token: string;
 }
