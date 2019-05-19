@@ -7,5 +7,5 @@ import http from '@/utils/http';
  * @param params
  */
 export function fetchOpenId(params: type.ICode): AxiosPromise<type.IOpenId> {
-  return http.post('wechat/openid', params);
+  return http.post('openid', params);
 }

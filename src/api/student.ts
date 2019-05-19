@@ -17,7 +17,7 @@ export function addStudent(params: IStudent) {
  *
  * @param params 查询参数
  */
-export function getStudentList(params: IStudent): ApiListData<IStudent> {
+export function getStudentList(params: QueryCondition<IStudent>): ApiListData<IStudent> {
     return http.post('student/list', params);
 }
 
