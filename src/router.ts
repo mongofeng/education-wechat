@@ -57,16 +57,25 @@ const router = new Router({
               path: 'all',
               name: 'all',
               component: HourList,
+              meta: {
+                title: '课时列表',
+              },
             },
             {
               path: 'increase',
               name: 'increase',
               component: HourList,
+              meta: {
+                title: '课时列表',
+              },
             },
             {
               path: 'decrease',
               name: 'decrease',
               component: HourList,
+              meta: {
+                title: '课时列表',
+              },
             },
           ],
         },
