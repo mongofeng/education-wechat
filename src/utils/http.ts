@@ -23,7 +23,7 @@ const accessTokenName = 'Authorization';
 // };
 
 const http = axios.create({
-  // baseURL: `http://47.107.144.222/v1/`,
+  baseURL: process.env.VUE_APP_API_SERVER,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
   },

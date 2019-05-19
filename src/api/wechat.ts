@@ -7,5 +7,5 @@ import http from '@/utils/http';
  * @param params
  */
 export function fetchOpenId(params: type.ICode): ApiResponse<type.IOpenId> {
-  return http.post('openid', params);
+  return http.post('wechat/openid', params);
 }
