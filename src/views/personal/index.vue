@@ -1,6 +1,9 @@
 <template>
   <div class="education-warper bg">
-    <mu-card-header title="Myron Avatar" sub-title="sub title" class="bg-white mb20">
+    <mu-card-header 
+      :title="userMsg ? userMsg.name : ''" 
+      :subTitle="userMsg ? SEX_LABEL[userMsg.sex] : ''" 
+      class="bg-white mb20">
       <mu-avatar slot="avatar">
         <img src="~@/assets/images/uicon.jpg">
       </mu-avatar>
@@ -48,9 +51,16 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import { namespace } from 'vuex-class';
+import * as type from '@/const/type/student';
+import * as enums from '@/const/enum';
+const someModule = namespace('oauth');
 @Component
 export default class Personal extends Vue {
+  @someModule.State('userMsg') public userMsg!: type.IStudent;
+
+  private SEX_LABEL: any = enums.SEX_LABEL;
+
   private list: any[] = [
     {
       title: 'Breakfast',
@@ -89,7 +99,6 @@ export default class Personal extends Vue {
    }
    &__count {
      font-size: 24px;
-    //  font-weight: bold;
    }
  }
 

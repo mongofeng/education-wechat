@@ -1,20 +1,25 @@
 // TODO: 应用管理Vuex相关逻辑，待移除
 import * as api from '@/api/wechat';
 import * as apiStu from '@/api/student';
+import * as type from '@/const/type/student';
 import { ActionContext } from 'vuex';
 
 const ADD_OPENID = 'ADD_OPENID';
 const ADD_USERID = 'ADD_USERID';
 
+const ADD_USER_MESSAGE = 'ADD_USER_MESSAGE';
+
 export interface IState {
   openid: string;
   userid: string;
+  userMsg: type.IStudent | null;
 }
 
 // initial state
 const state: IState = {
   openid: localStorage.getItem('openid') || '',
   userid: '',
+  userMsg: null,
 };
 
 // getters
@@ -66,6 +71,7 @@ const actions = {
     if (!first) { return; }
 
     commit(ADD_USERID, first._id);
+    commit(ADD_USER_MESSAGE, first);
   },
 };
 
@@ -76,6 +82,9 @@ const mutations = {
   },
   [ADD_USERID](state: IState, userid: string) {
     state.userid = userid;
+  },
+  [ADD_USER_MESSAGE](state: IState, user: type.IStudent) {
+    state.userMsg = user;
   },
 };
 
