@@ -5,6 +5,19 @@
         <img src="~@/assets/images/uicon.jpg">
       </mu-avatar>
     </mu-card-header>
+
+    <!-- 统计栏 -->
+    <mu-container class="mb20 bg-white">
+      <mu-row gutter class="grid-warp">
+        <mu-col span="4" v-for="(item, index) in totalList" :key="index" class="p10">
+          <div class="grid-cell">
+            <div class="grid-cell__count pb5">{{item.total}}</div>
+            <div class="grid-cell__title pt5 pb5">{{item.title}}</div>
+          </div>
+        </mu-col>
+      </mu-row>
+    </mu-container>
+
     <mu-list class="bg-white">
       <mu-list-item button :ripple="false">
         <mu-list-item-action>
@@ -52,10 +65,34 @@ export default class Personal extends Vue {
       author: 'ruolin',
     },
   ];
+
+  private totalList: any[] = [{
+      title: '已用课时',
+      total: '0',
+    }, {
+      title: '总计课时',
+      total: '12',
+    }, {
+      title: '剩余课时',
+      total: '12',
+    }];
 }
 </script>
-<style lang="scss" scoped>
+ <style lang="scss" scoped>
+ .grid-cell {
+   width: 100%;
+   text-align: center;
+   &__title {
+     font-size: 12px;
+     color: #333;
+     
+   }
+   &__count {
+     font-size: 24px;
+    //  font-weight: bold;
+   }
+ }
 
-</style>
+ </style>
 
  

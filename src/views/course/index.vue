@@ -1,8 +1,8 @@
 <template>
   <div class="education-warper bg warp-direction">
-    <div class="title mb20 bg-white">课程中心</div>
+    <!-- <div class="title mb20 bg-white">课程中心</div> -->
     <div class="warp-direction__scroller">
-      <mu-expansion-panel :expand="true">
+      <mu-expansion-panel :expand="true" >
         <div slot="header">Panel 1</div>
         <div class="demo-paper">
           <div>上午</div>
@@ -21,7 +21,7 @@
         </div>
       </mu-expansion-panel>
 
-      <mu-expansion-panel :expand="true">
+      <mu-expansion-panel :expand="true" >
         <div slot="header">Panel 2</div>
         <div class="demo-paper">
           <div>上午</div>

@@ -1,22 +1,13 @@
 <template>
   <div class="education-warper warp-direction">
-    <div class="title mb20 bg-white">学时统计</div>
-    <!-- 统计栏 -->
-    <mu-container>
-      <mu-row gutter class="grid-warp">
-        <mu-col span="4" v-for="(item, index) in list" :key="index" class="p10">
-          <div class="grid-cell">
-            <div class="grid-cell__title pt10 pb10">{{item.title}}</div>
-            <div class="grid-cell__count pb10">{{item.total}}</div>
-          </div>
-        </mu-col>
-      </mu-row>
-    </mu-container>
+    <!-- <div class="title mb20 bg-white">学时统计</div> -->
+    
     <!-- tab栏 -->
     <mu-tabs
       @hook:updated="pudate" 
       :value.sync="active" 
       inverse 
+      full-width
       color="secondary" 
       text-color="rgba(0, 0, 0, .54)"  
       center>
@@ -41,34 +32,24 @@ type ITab = Omit<view.IMenu, 'icon'>;
 @Component
 export default class Hour extends Vue {
   private active: string = 'all';
-  private list: any[] = [{
-      title: '已用',
-      total: '0',
-    }, {
-      title: '总计',
-      total: '12',
-    }, {
-      title: '剩余',
-      total: '12',
-    }];
 
   private menu: ITab[] = [
     {
-      title: '全部',
+      title: '总计课时',
       name: 'all',
       path: {
         name: 'all',
       },
     },
     {
-      title: '增加',
+      title: '增加课时',
       name: 'increase',
       path: {
         name: 'increase',
       },
     },
     {
-      title: '减少',
+      title: '已用课时',
       name: 'decrease',
       path: {
         name: 'decrease',
@@ -88,22 +69,5 @@ export default class Hour extends Vue {
   }
 }
 </script>
- <style lang="scss" scoped>
- .grid-cell {
-   width: 100%;
-   text-align: center;
-   box-shadow: $box-shadow; 
-   border-radius: 10px;
-   &__title {
-     font-size: 12px;
-     color: #333;
-     
-   }
-   &__count {
-     font-size: 24px;
-    //  font-weight: bold;
-   }
- }
 
- </style>
  
