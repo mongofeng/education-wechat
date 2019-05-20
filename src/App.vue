@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
+    <!-- 使用动态的 transition name -->
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script lang="ts">
@@ -9,7 +12,6 @@ import * as api from '@/api/wechat';
 import {
   namespace,
 } from 'vuex-class';
-// import {Action} from '@/store/modules/oauth'
 
 const someModule = namespace('oauth');
 
@@ -19,6 +21,8 @@ export default class App extends Vue {
   @someModule.State('userid') public userid!: string;
   @someModule.Action('fetchOpenId') public fetchOpenId!: () => Promise<void>;
   @someModule.Action('fetchUserId') public fetchUserId!: () => Promise<void>;
+
+  private transitionName: string = 'slide-left';
 
   public mounted() {
     console.log('app mounted');

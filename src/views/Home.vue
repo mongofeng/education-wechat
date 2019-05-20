@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <router-view/>
+    <!-- 使用动态的 transition name -->
+    <transition :name="transitionName" mode="out-in">
+      <router-view></router-view>
+    </transition>
     <div class="nav">
       <mu-bottom-nav :value.sync="active">
         <mu-bottom-nav-item 
@@ -24,6 +27,8 @@ import * as view from '@/const/type/view';
 @Component
 export default class Home extends Vue {
   private active: string = 'personal';
+
+  private transitionName: string = 'slide-left';
 
   private menu: view.IMenu[] = [
     {
