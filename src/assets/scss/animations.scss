@@ -1,8 +1,10 @@
 // 页面过渡左滑
-.slide-left-enter-active,
-.slide-left-leave-active  {
+.slide-left-enter-active{
   transition: all 0.3s ease;
 }
+// .slide-left-leave-active  {
+//   transition: all 0.3s ease;
+// }
 
 
 .slide-left-enter {
@@ -24,8 +26,7 @@
 
 
 // 页面过渡右滑
-.slide-right-enter-active,
-.slide-right-leave-active  {
+.slide-right-enter-active {
   transition: all .2s ease;
 }
 
