@@ -21,14 +21,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch, Mixins } from 'vue-property-decorator';
 import * as view from '@/const/type/view';
+import TransitionRoute from '@/mixins/transtion';
 
 @Component
-export default class Home extends Vue {
+export default class Home extends Mixins(TransitionRoute) {
   private active: string = 'personal';
-
-  private transitionName: string = 'slide-left';
 
   private menu: view.IMenu[] = [
     {

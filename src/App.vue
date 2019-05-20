@@ -7,22 +7,21 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Mixins } from 'vue-property-decorator';
 import * as api from '@/api/wechat';
 import {
   namespace,
 } from 'vuex-class';
+import TransitionRoute from '@/mixins/transtion';
 
 const someModule = namespace('oauth');
 
 @Component
-export default class App extends Vue {
+export default class App extends Mixins(TransitionRoute) {
   @someModule.Getter('openid') public openid!: string;
   @someModule.State('userid') public userid!: string;
   @someModule.Action('fetchOpenId') public fetchOpenId!: () => Promise<void>;
   @someModule.Action('fetchUserId') public fetchUserId!: () => Promise<void>;
-
-  private transitionName: string = 'slide-left';
 
   public mounted() {
     console.log('app mounted');

@@ -21,16 +21,18 @@
       </mu-tab>
     </mu-tabs>
 
-    <router-view/>
+    <transition :name="transitionName">
+      <router-view :key="$route.path"></router-view>
+    </transition>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Mixins } from 'vue-property-decorator';
 import * as view from '@/const/type/view';
-
+import TransitionRoute from '@/mixins/transtion';
 type ITab = Omit<view.IMenu, 'icon'>;
 @Component
-export default class Hour extends Vue {
+export default class Hour extends Mixins(TransitionRoute) {
   private active: string = 'all';
 
   private menu: ITab[] = [

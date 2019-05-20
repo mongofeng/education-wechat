@@ -27,18 +27,11 @@ const router = new Router({
       },
       children: [
         {
-          path: 'personal',
-          name: 'personal',
-          meta: {
-            title: '个人中心',
-          },
-          component: Personal,
-        },
-        {
           path: 'course',
           name: 'course',
           meta: {
             title: '课程中心',
+            depth: 1,
           },
           component: Course,
         },
@@ -47,6 +40,7 @@ const router = new Router({
           name: 'hour',
           meta: {
             title: '课时列表',
+            depth: 2,
           },
           component: Hour,
           redirect: {
@@ -59,6 +53,7 @@ const router = new Router({
               component: HourList,
               meta: {
                 title: '课时列表',
+                depth: 3,
               },
             },
             {
@@ -67,6 +62,7 @@ const router = new Router({
               component: HourList,
               meta: {
                 title: '课时列表',
+                depth: 4,
               },
             },
             {
@@ -75,9 +71,20 @@ const router = new Router({
               component: HourList,
               meta: {
                 title: '课时列表',
+                depth: 5,
               },
             },
           ],
+        },
+
+        {
+          path: 'personal',
+          name: 'personal',
+          meta: {
+            title: '个人中心',
+            depth: 6,
+          },
+          component: Personal,
         },
       ],
     },
@@ -86,6 +93,7 @@ const router = new Router({
       name: 'register',
       meta: {
         title: '绑定用户',
+        depth: 7,
       },
       component: Register,
     },
