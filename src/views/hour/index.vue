@@ -22,7 +22,9 @@
     </mu-tabs>
 
     <transition :name="transitionName">
-      <router-view :key="$route.path"></router-view>
+      <keep-alive>
+        <router-view :key="$route.path"></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>
