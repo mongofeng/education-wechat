@@ -14,6 +14,8 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import * as api from '@/api/hour';
+import * as type from '@/const/type/hour'
 const num: number[] = [];
 for (let i = 1; i < 10; i++) {
   num.push(i);
@@ -21,6 +23,11 @@ for (let i = 1; i < 10; i++) {
 
 @Component
 export default class HourList extends Vue {
+  public page: number = 1
+  public count: number = 0
+
+  public list: type.IHour[] = []
+
   public active: number = 0;
   private num: number[] = num;
   private loading: boolean = false;
@@ -36,6 +43,27 @@ export default class HourList extends Vue {
       this.loading = false;
       this.num.push(this.num.length + 1);
     }, 2000);
+  }
+
+  get condition () {
+    const condition: any = {
+      limit: 10,
+      page: 1, 
+      sort: { createDate: -1 }
+    }
+
+    return condition
+  }
+
+
+
+  async fetchData (reset?: boolean) {
+    if (reset) {
+      this.page = 1;
+    }
+    const {data: {data: {list, count}}} = await api.getHourrList(this.condition);
+    this.count = count;
+    this.list = list;
   }
  }
 </script>
