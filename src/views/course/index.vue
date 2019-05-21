@@ -2,43 +2,11 @@
   <div class="education-warper bg warp-direction">
     <!-- <div class="title mb20 bg-white">课程中心</div> -->
     <div class="warp-direction__scroller">
-      <mu-expansion-panel :expand="true" >
-        <div slot="header">Panel 1</div>
-        <div class="demo-paper">
+      <mu-expansion-panel :expand="true"  v-for="item in list" :key="item.day">
+        <div slot="header">{{item.name}}</div>
+        <div class="demo-paper" v-for="(course, key) in item.children" :key="key">
           <div>上午</div>
-          <div>暂无课程</div>
-        </div>
-
-        <div class="demo-paper">
-          <div>上午</div>
-          <div>英语、数学</div>
-          <div>12:00 - 13:00</div>
-        </div>
-
-        <div class="demo-paper">
-          <div>上午</div>
-          <div>暂无课程</div>
-        </div>
-      </mu-expansion-panel>
-
-      <mu-expansion-panel :expand="true" >
-        <div slot="header">Panel 2</div>
-        <div class="demo-paper">
-          <div>上午</div>
-          <div>英语、数学</div>
-          <div>12:00 - 13:00</div>
-        </div>
-
-        <div class="demo-paper">
-          <div>中午</div>
-          <div>英语、数学</div>
-          <div>12:00 - 13:00</div>
-        </div>
-
-        <div class="demo-paper">
-          <div>晚上</div>
-          <div>英语、数学</div>
-          <div>12:00 - 13:00</div>
+          <div>{{course.length ? course.join(',') : '暂无课程'}}</div>
         </div>
       </mu-expansion-panel>
 
@@ -47,44 +15,128 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import { getWeek } from '@/utils/time';
+import { namespace } from 'vuex-class';
+import * as api from '@/api/course'
+const {
+    mondayTimeStarmp,
+    sundayTimeStarmp,
+} = getWeek()
+const someModule = namespace('oauth');
 @Component
 export default class Course extends Vue {
+  @someModule.State('userid') public userid!: string;
   private loading: boolean = false;
 
-  private columns: any[] = [
-    { title: 'Dessert (100g serving)', name: 'name' },
-    { title: 'Calories', name: 'calories', align: 'center' },
-    { title: 'Fat (g)', name: 'fat', align: 'center' },
-    { title: 'Carbs (g)', name: 'carbs', align: 'center' },
+  public page: number = 1;
+
+
+  public list: any[] = [
+    {
+      name: '周日',
+      day: 0,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周一',
+      day: 1,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周二',
+      day: 2,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周三',
+      day: 3,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周四',
+      day: 4,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周五',
+      day: 5,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
+    {
+      name: '周六',
+      day: 6,
+      children: {
+        1: [],
+        2: [],
+        3: []
+      }
+    },
   ];
 
-  private list: any[] = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      iron: 1,
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      iron: 1,
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      iron: 7,
-    },
-  ];
+  get condition () {
+    const condition: any = {
+        limit: 1000,
+        page: 1,
+        query: {
+            studentIds: {
+                $in: [this.userid]
+            },
+            startDate: {
+                $lte: sundayTimeStarmp
+            },
+            endDate: {
+                $gte: mondayTimeStarmp,
+            }
+        },
+        sort: { createDate: -1 }
+    }
+
+    return condition
+  }
+
+
+  public mounted() {
+    this.fetchData(true);
+  }
+
+
+
+
+  public async fetchData(reset?: boolean) {
+    if (reset) {
+      this.page = 1;
+    }
+    const {data: {data: {list}}} = await api.getCourserList(this.condition);
+
+    console.log(list)
+    for (let item of list) {
+      this.list[item.day].children[item.time].push(item.name)
+    }
+  }
 }
 </script>
 <style lang="scss">
