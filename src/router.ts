@@ -51,6 +51,7 @@ const router = new Router({
               path: 'all',
               name: 'all',
               component: HourList,
+              props: { type: 'all' },
               meta: {
                 title: '课时列表',
                 depth: 3,
@@ -59,6 +60,7 @@ const router = new Router({
             {
               path: 'increase',
               name: 'increase',
+              props: { type: 1 },
               component: HourList,
               meta: {
                 title: '课时列表',
@@ -68,6 +70,7 @@ const router = new Router({
             {
               path: 'decrease',
               name: 'decrease',
+              props: { type: 2 },
               component: HourList,
               meta: {
                 title: '课时列表',
