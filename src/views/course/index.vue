@@ -36,63 +36,42 @@ export default class Course extends Vue {
       name: '周日',
       day: 0,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周一',
       day: 1,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周二',
       day: 2,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周三',
       day: 3,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周四',
       day: 4,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周五',
       day: 5,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
     {
       name: '周六',
       day: 6,
       children: {
-        1: [],
-        2: [],
-        3: []
       }
     },
   ];
@@ -134,7 +113,15 @@ export default class Course extends Vue {
 
     console.log(list)
     for (let item of list) {
+<<<<<<< HEAD
       this.list[item.day].children[item.time].push(item.name)
+=======
+      if (this.list[item.day].children[item.time]) {
+        this.list[item.day].children[item.time].push(item.name)
+      } else {
+        this.list[item.day].children[item.time] = [item.name]
+      }
+>>>>>>> feat:添加课程
     }
   }
 }
