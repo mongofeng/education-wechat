@@ -28,11 +28,14 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import * as api from '@/api/hour';
 import * as type from '@/const/type/hour';
 import * as enums from '@/const/enum';
+import { namespace } from 'vuex-class';
 import formatDate from '@/utils/format-date';
 
-
+const someModule = namespace('oauth');
 @Component
 export default class HourList extends Vue {
+  @someModule.State('userid') public userid!: string;
+
   @Prop()
   public type!: string | number;
 
@@ -40,14 +43,17 @@ export default class HourList extends Vue {
     const condition: any = {
       limit: 10,
       page: 1,
+      query: {
+        studentId: {
+          $eq: this.userid
+        }
+      },
       sort: { createDate: -1 },
     };
 
     if (this.type && this.type !== 'all') {
-      condition.query = {
-        type: {
-          $eq: this.type,
-        },
+      condition.query.type = {
+        $eq: this.type,
       };
     }
 
