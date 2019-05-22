@@ -24,7 +24,7 @@
   </mu-container>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import * as api from '@/api/hour';
 import * as type from '@/const/type/hour';
 import * as enums from '@/const/enum';
@@ -39,14 +39,25 @@ export default class HourList extends Vue {
   @Prop()
   public type!: string | number;
 
+  public formatDate = formatDate;
+  public COURSE_HOUR_TYPE_LABEL: any = enums.COURSE_HOUR_TYPE_LABEL;
+  public page: number = 1;
+  public count: number = 0;
+
+  public list: type.IHour[] = [];
+
+  public active: number = 0;
+  private loading: boolean = false;
+
+
   get condition() {
     const condition: any = {
       limit: 10,
       page: 1,
       query: {
         studentId: {
-          $eq: this.userid
-        }
+          $eq: this.userid,
+        },
       },
       sort: { createDate: -1 },
     };
@@ -59,17 +70,10 @@ export default class HourList extends Vue {
 
     return condition;
   }
-  public formatDate = formatDate;
-  public COURSE_HOUR_TYPE_LABEL: any = enums.COURSE_HOUR_TYPE_LABEL;
-  public page: number = 1;
-  public count: number = 0;
 
-  public list: type.IHour[] = [];
-
-  public active: number = 0;
-  private loading: boolean = false;
-
-  public mounted() {
+  @Watch('userid', {immediate: true})
+  public onUserIdChange(val: string) {
+    if (!val) { return; }
     this.fetchData(true);
   }
 

@@ -33,11 +33,12 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import * as type from '@/const/type/student';
 import * as enums from '@/const/enum';
 import * as view from '@/const/type/view';
+import * as api from '@/api/student-hour';
 
 type ITab = Pick<view.IMenu, 'icon' | 'title'>;
 
@@ -45,23 +46,32 @@ const someModule = namespace('oauth');
 @Component
 export default class Personal extends Vue {
   @someModule.State('userMsg') public userMsg!: type.IStudent;
+  @someModule.State('userid') public userid!: string;
 
   private SEX_LABEL: any = enums.SEX_LABEL;
 
-  private totalList: any[] = [
+  private totalInfo = {
+    total: 0,
+    used: 0,
+    reset: 0,
+  };
+
+  get totalList() {
+    return [
     {
       title: '已用课时',
-      total: '0',
+      total: this.totalInfo.used,
     },
     {
       title: '总计课时',
-      total: '12',
+      total: this.totalInfo.total,
     },
     {
       title: '剩余课时',
-      total: '12',
+      total: this.totalInfo.reset,
     },
   ];
+  }
 
   get options(): ITab[] {
     const address = this.userMsg
@@ -90,6 +100,20 @@ export default class Personal extends Vue {
         title: address,
       },
     ];
+  }
+
+  @Watch('userid', {immediate: true})
+  public onUserIdChange(val: string) {
+    if (!val) { return; }
+    this.fetchData();
+  }
+
+
+  public async fetchData()  {
+    const {data: {data}} = await api.getStudentHour(this.userid);
+    this.totalInfo.total = data.num;
+    this.totalInfo.used = data.used;
+    this.totalInfo.reset = data.num - data.used;
   }
 }
 </script>

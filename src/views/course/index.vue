@@ -4,101 +4,116 @@
     <div class="warp-direction__scroller">
       <mu-expansion-panel :expand="true"  v-for="item in list" :key="item.day">
         <div slot="header">{{item.name}}</div>
-        <div class="demo-paper" v-for="(course, key) in item.children" :key="key">
-          <div>上午</div>
-          <div>{{course.length ? course.join(',') : '暂无课程'}}</div>
-        </div>
+        <mu-row>
+          <mu-col span="6" v-for="(course, key) in item.children" :key="key">
+            <div class="paper pb10">
+                <div class="paper_title pb5">{{DAY_LABEL[key]}}</div>
+                <div class="paper_content">{{course.length ? course.join(',') : '暂无课程'}}</div>
+              </div>
+            </mu-col>
+        </mu-row>
+        
       </mu-expansion-panel>
 
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getWeek } from '@/utils/time';
 import { namespace } from 'vuex-class';
-import * as api from '@/api/course'
+import * as api from '@/api/course';
+import * as enums from '@/const/enum';
 const {
     mondayTimeStarmp,
     sundayTimeStarmp,
-} = getWeek()
+} = getWeek();
 const someModule = namespace('oauth');
-@Component
-export default class Course extends Vue {
-  @someModule.State('userid') public userid!: string;
-  private loading: boolean = false;
-
-  public page: number = 1;
-
-
-  public list: any[] = [
+function getList() {
+  return  [
     {
       name: '周日',
       day: 0,
       children: {
-      }
+      },
     },
     {
       name: '周一',
       day: 1,
       children: {
-      }
+      },
     },
     {
       name: '周二',
       day: 2,
       children: {
-      }
+      },
     },
     {
       name: '周三',
       day: 3,
       children: {
-      }
+      },
     },
     {
       name: '周四',
       day: 4,
       children: {
-      }
+      },
     },
     {
       name: '周五',
       day: 5,
       children: {
-      }
+      },
     },
     {
       name: '周六',
       day: 6,
       children: {
-      }
+      },
     },
   ];
+}
+@Component
+export default class Course extends Vue {
 
-  get condition () {
+
+  get condition() {
     const condition: any = {
         limit: 1000,
         page: 1,
         query: {
             studentIds: {
-                $in: [this.userid]
+                $in: [this.userid],
             },
             startDate: {
-                $lte: sundayTimeStarmp
+                $lte: sundayTimeStarmp,
             },
             endDate: {
                 $gte: mondayTimeStarmp,
-            }
+            },
         },
-        sort: { createDate: -1 }
-    }
+        sort: { createDate: -1 },
+    };
 
-    return condition
+    return condition;
   }
 
 
-  public mounted() {
+  @someModule.State('userid') public userid!: string;
+
+  public page: number = 1;
+
+
+  public list: any[] = getList();
+
+  public DAY_LABEL = enums.DAY_LABEL;
+  private loading: boolean = false;
+
+  @Watch('userid', {immediate: true})
+  public onUserIdChange(val: string) {
+    if (!val) { return; }
     this.fetchData(true);
   }
 
@@ -110,28 +125,30 @@ export default class Course extends Vue {
       this.page = 1;
     }
     const {data: {data: {list}}} = await api.getCourserList(this.condition);
-
-    console.log(list)
-    for (let item of list) {
-<<<<<<< HEAD
-      this.list[item.day].children[item.time].push(item.name)
-=======
+    const result: any[] = getList();
+    for (const item of list) {
       if (this.list[item.day].children[item.time]) {
-        this.list[item.day].children[item.time].push(item.name)
+        result[item.day].children[item.time].push(item.name);
       } else {
-        this.list[item.day].children[item.time] = [item.name]
+        result[item.day].children[item.time] = [item.name];
       }
->>>>>>> feat:添加课程
     }
+
+    this.list = result.filter((item) => {
+      return item.children && Object.keys(item.children).length;
+    });
   }
 }
 </script>
 <style lang="scss">
-.demo-paper {
-  display: table-cell;
-  height: 100px;
-  width: 100px;
-  margin: 20px;
-  text-align: center;
+.paper {
+  &_title {
+    color: #333;
+    font-size: 12px;
+  }
+
+  &_content {
+    font-size: 14px;
+  }
 }
 </style>
