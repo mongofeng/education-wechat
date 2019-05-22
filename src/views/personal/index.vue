@@ -103,11 +103,11 @@ export default class Personal extends Vue {
         title: sex,
       },
       {
-        icon: 'account_balance',
+        icon: 'data_usage',
         title: age,
       },
       {
-        icon: 'data_usage',
+        icon: 'account_balance',
         title: status,
       },
       {
