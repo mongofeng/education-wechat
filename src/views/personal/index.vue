@@ -1,12 +1,12 @@
 <template>
   <div class="education-warper bg">
     <mu-card-header
-      :title="userMsg ? userMsg.name : ''"
-      :subTitle="userMsg ? SEX_LABEL[userMsg.sex] : ''"
+      :title="nickName"
+      :subTitle="SEX_LABEL[sex]"
       class="bg-white mb20"
     >
       <mu-avatar slot="avatar">
-        <img src="~@/assets/images/uicon.jpg">
+        <img :src="headimgurl">
       </mu-avatar>
     </mu-card-header>
 
@@ -39,6 +39,7 @@ import * as type from '@/const/type/student';
 import * as enums from '@/const/enum';
 import * as view from '@/const/type/view';
 import * as api from '@/api/student-hour';
+import * as apiWechat from '@/api/wechat';
 
 type ITab = Pick<view.IMenu, 'icon' | 'title'>;
 
@@ -47,8 +48,15 @@ const someModule = namespace('oauth');
 export default class Personal extends Vue {
   @someModule.State('userMsg') public userMsg!: type.IStudent;
   @someModule.State('userid') public userid!: string;
+  @someModule.Getter('openid') public openid!: string;
 
   private SEX_LABEL: any = enums.SEX_LABEL;
+
+  private headimgurl: string = '~@/assets/images/uicon.jpg';
+
+  private nickName: string = '';
+
+  private sex: number = 1;
 
   private totalInfo = {
     total: 0,
@@ -82,21 +90,32 @@ export default class Personal extends Vue {
     const status = this.userMsg
       ? enums.STUDENT_STATUS_LABEL[this.userMsg.status]
       : '';
+    const name = this.userMsg ? this.userMsg.name : '';
+
+    const sex = this.userMsg ? this.SEX_LABEL[this.userMsg.sex] : '';
     return [
       {
-        icon: 'send',
+        icon: 'account_box',
+        title: name,
+      },
+      {
+        icon: 'album',
+        title: sex,
+      },
+      {
+        icon: 'account_balance',
         title: age,
       },
       {
-        icon: 'drafts',
-        title: status || '',
+        icon: 'data_usage',
+        title: status,
       },
       {
-        icon: 'inbox',
+        icon: 'call',
         title: phone,
       },
       {
-        icon: 'grade',
+        icon: 'room',
         title: address,
       },
     ];
@@ -108,12 +127,28 @@ export default class Personal extends Vue {
     this.fetchData();
   }
 
+  @Watch('openid', {immediate: true})
+  public onopenidChange(val: string) {
+    if (!val) { return; }
+    this.fetchUserInfo();
+  }
+
 
   public async fetchData()  {
     const {data: {data}} = await api.getStudentHour(this.userid);
     this.totalInfo.total = data.num;
     this.totalInfo.used = data.used;
     this.totalInfo.reset = data.num - data.used;
+  }
+
+
+  public async fetchUserInfo() {
+    const {data} = await apiWechat.fetchUserInfo({
+      openid: this.openid,
+    });
+    this.headimgurl = data.headimgurl;
+    this.nickName = data.nickname;
+    this.sex = data.sex;
   }
 }
 </script>

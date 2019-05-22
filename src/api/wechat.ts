@@ -9,3 +9,7 @@ import http from '@/utils/http';
 export function fetchOpenId(params: type.ICode): AxiosPromise<type.IOpenId> {
   return http.post('openid', params);
 }
+
+export function fetchUserInfo(params: type.IInfo): AxiosPromise<type.IUserInfo> {
+  return http.post('userInfo', params);
+}

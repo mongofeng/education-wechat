@@ -40,13 +40,6 @@ export default class App extends Mixins(TransitionRoute) {
         name: 'register',
       });
     }
-    // const openid: string | null = localStorage.getItem('openid');
-
-    // 如果本地有openid就已经授权了不用再授权
-    // if (openid) {
-    //   return;
-    // }
-    // this.fetchOpenId()
   }
 }
 </script>
