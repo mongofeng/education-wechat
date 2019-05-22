@@ -1,6 +1,6 @@
 <template>
   <mu-container ref="container" class="warp-direction__scroller">
-    <mu-load-more :loading="loading" @load="load">
+    <mu-load-more :loading="loading" @load="load" v-if="list.length">
       <mu-list>
         <template v-for="item in list">
           <mu-list-item :key="item._id" class="pt5 pb5">
@@ -21,6 +21,8 @@
         </template>
       </mu-list>
     </mu-load-more>
+
+    <div class="no-data" v-else></div>
   </mu-container>
 </template>
 <script lang="ts">
@@ -96,5 +98,3 @@ export default class HourList extends Vue {
   }
  }
 </script>
-<style lang="scss" scoped>
-</style>
