@@ -1,0 +1,41 @@
+version: '2.1'
+
+services:
+  wechat:
+    image: wechat
+    build: ../
+    container_name: 'wechat'
+    volumes:
+      - dist:/usr/src/app/dist
+    environment:
+      NODE_ENV: production
+  nginx_web:
+    image: nginx
+    ports:
+      - 88:80
+    container_name: 'nginx_web'
+    restart: always
+    volumes:
+      - dist:/usr/share/nginx/html:ro
+      # - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  # database:
+  #   image: mongo
+  #   restart: always
+  #   volumes:
+  #     - ~/docker/mongo/data/db:/data/db
+  #   networks:
+  #     - webapp-network
+#   egg-api:
+#     image: egg-api
+#     depends_on:
+#       - database
+#     environment:
+#       NODE_ENV: production
+#     networks:
+#       - webapp-network
+# networks:
+#   webapp-network:
+#     driver: bridge
+
+volumes:
+  dist:
