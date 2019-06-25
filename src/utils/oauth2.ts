@@ -32,4 +32,4 @@ export default function(): void {
 
 }
 
-// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6bce565776a81ced&redirect_uri=http%3A%2F%2F47.107.144.222%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6bce565776a81ced&redirect_uri=http%3A%2F%2F118.31.227.99%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_base&state=123#wechat_redirect
