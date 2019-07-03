@@ -6,4 +6,4 @@ RUN npm install --registry=https://registry.npm.taobao.org
 ENV NODE_ENV production
 COPY . .
 RUN ls
-CMD ["npm", "run", "build"]
+CMD ["npm", "run", "docker"]
