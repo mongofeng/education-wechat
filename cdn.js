@@ -19,6 +19,8 @@ const cdn = {
         'https://lib.baomitu.com/vuex/3.0.1/vuex.min.js',
         'https://lib.baomitu.com/axios/0.18.0/axios.min.js',
         'https://unpkg.com/muse-ui/dist/muse-ui.js',
+        'https://unpkg.com/muse-ui-message/dist/muse-ui-message.js',
+        'https://unpkg.com/muse-ui-toast/dist/muse-ui-toast.js'
       ]
   }
 }
@@ -30,7 +32,9 @@ const externals = {
   'vue-router': 'VueRouter',
   vuex: 'Vuex',
   axios: 'axios',
-  'muse-ui': 'MuseUI'
+  'muse-ui': 'MuseUI',
+  'muse-ui-message': 'Message',
+  'muse-ui-toast': 'Toast'
 }
 
 exports.externals = externals
