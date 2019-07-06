@@ -25,7 +25,8 @@ const cdn = {
   }
 }
 /**
- * 前面的是名：后面的是变量
+ * 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)
+ * package：全局变量
  */
 const externals = {
   vue: 'Vue',
@@ -33,8 +34,8 @@ const externals = {
   vuex: 'Vuex',
   axios: 'axios',
   'muse-ui': 'MuseUI',
-  'muse-ui-message': 'Message',
-  'muse-ui-toast': 'Toast'
+  'muse-ui-message': 'MuseUIMessage',
+  'muse-ui-toast': 'MuseUIToast'
 }
 
 exports.externals = externals

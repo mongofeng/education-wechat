@@ -10,8 +10,8 @@ import '@/assets/scss/index.scss';
 // import 'muse-ui/dist/muse-ui.css';
 // import 'muse-ui-message/dist/muse-ui-message.css';
 import MuseUI from 'muse-ui';
-import Message from 'muse-ui-message';
-import Toast from 'muse-ui-toast';
+import MuseUIMessage from 'muse-ui-message';
+import MuseUIToast from 'muse-ui-toast';
 
 import Component from 'vue-class-component';
 
@@ -24,10 +24,10 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ]);
 
-Vue.use(Toast, {
+Vue.use(MuseUIToast, {
   position: 'top',
 });
-Vue.use(Message);
+Vue.use(MuseUIMessage);
 Vue.use(MuseUI);
 
 Vue.config.productionTip = false;
