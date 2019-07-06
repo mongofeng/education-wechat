@@ -1,4 +1,7 @@
 // vue.config.js
+// 启用GZip压缩
+const CompressionPlugin = require('compression-webpack-plugin');
+const {cdn, externals} = require('./cdn')
 module.exports = {
   // options...
   publicPath: process.env.VUE_APP_BASE_URL,
@@ -11,5 +14,47 @@ module.exports = {
         data: `@import '@/assets/scss/variable.scss';`
       },
     }
+  },
+
+  configureWebpack: (config) => {
+    
+
+    if (process.env.NODE_ENV === 'production') {
+      Object.assign(config, {
+        externals: externals
+      })
+      
+      // 干掉console.log:https://juejin.im/post/5c84b709e51d4578ca71dde4#heading-0
+      config.optimization.minimizer[0].options.terserOptions.compress.warnings = false
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_debugger = true
+      config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
+
+      config.plugins = [
+        ...config.plugins,
+        new CompressionPlugin({
+          filename: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8,
+          cache: true
+        }),
+      ]
+    }    
+  },
+
+
+  chainWebpack: config => {
+    // 对vue-cli内部的 webpack 配置进行更细粒度的修改。
+    // 添加CDN参数到htmlWebpackPlugin配置中， 详见public/index.html 修改
+    config.plugin('html').tap(args => {
+      if (process.env.NODE_ENV === 'production') {
+          args[0].cdn = cdn.build
+      } else {
+        args[0].cdn = cdn.dev
+      }
+      return args
+    })
   }
 }
