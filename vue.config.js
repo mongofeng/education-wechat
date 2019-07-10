@@ -6,6 +6,8 @@ module.exports = {
   // options...
   publicPath: process.env.VUE_APP_BASE_URL,
   // outputDir: 'wechat',
+  productionSourceMap: false,
+  
   css: {
     loaderOptions: {
       sass: {
