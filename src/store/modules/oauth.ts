@@ -17,7 +17,7 @@ export interface IState {
 
 // initial state
 const state: IState = {
-  openid: localStorage.getItem('openid') || '',
+  openid: sessionStorage.getItem('openid') || '',
   userid: '',
   userMsg: null,
 };
@@ -46,7 +46,7 @@ const actions = {
     //   openid: "oVB5OwyVDKfTZq4T61_p2roSg1tA",
     //   scope: "snsapi_base"}
     console.log(data);
-    localStorage.setItem('openid', data.openid);
+    sessionStorage.setItem('openid', data.openid);
     localStorage.setItem('wechat', JSON.stringify(data));
     commit(ADD_OPENID, data.openid);
   },
