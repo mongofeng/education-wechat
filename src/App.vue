@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Component, Vue, Mixins } from 'vue-property-decorator';
 import * as api from '@/api/wechat';
+// import VConsole from 'vconsole';
 import {
   namespace,
 } from 'vuex-class';
@@ -25,6 +26,9 @@ export default class App extends Mixins(TransitionRoute) {
 
   public mounted() {
     console.log('app mounted');
+    // 初始化
+    // const vConsole = new VConsole();
+    // console.log('Hello world');
     this.init();
   }
   private async init() {
