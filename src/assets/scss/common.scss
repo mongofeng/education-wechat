@@ -17,6 +17,8 @@ body,
   flex-direction: column;
   &__scroller {
     flex: 1;
+    height: 500px; // flex:1下子元素无法拿到父亲的高度,这里要写个假的高度
+    
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
