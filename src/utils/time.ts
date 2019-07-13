@@ -16,12 +16,15 @@ export function getWeek(dateStr?: string) {
     });
 
     const mYear = monday.getFullYear();
-    const mMonth = monday.getMonth() + 1;
+    const mMonth = monday.getMonth();
     const mDay = monday.getDate();
 
     const mondayTime = new Date(mYear, mMonth, mDay, 0, 0, 0);
     const mondayTimeStarmp = mondayTime.getTime();
-    console.log(mYear, mMonth, mDay, mondayTime);
+    console.log(mYear, mMonth, mDay, mondayTime, mondayTimeStarmp);
+
+    console.log(new Date(mondayStr));
+    console.log(new Date(mondayStr).getTime()); // NaN
 
 
 
@@ -38,13 +41,13 @@ export function getWeek(dateStr?: string) {
     });
 
     const sYear = sunday.getFullYear();
-    const sMonth = sunday.getMonth() + 1;
+    const sMonth = sunday.getMonth();
     const sDay = sunday.getDate();
 
     const sundayTime = new Date(sYear, sMonth, sDay, 23, 59, 59);
     const sundayTimeStarmp = sundayTime.getTime();
 
-    console.log(sYear, sMonth, sDay, sundayTime);
+    console.log(sYear, sMonth, sDay, sundayTime, sundayTimeStarmp);
 
     console.log(new Date(sundayStr));
     console.log(new Date(sundayStr).getTime()); // NaN
