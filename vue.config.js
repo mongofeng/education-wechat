@@ -18,6 +18,21 @@ module.exports = {
     }
   },
 
+
+  devServer: {
+    proxy: {
+      '/wechatServer': {
+        target: 'http://127.0.0.1:7777',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: { // 改变路径重定向,http://127.0.0.1:7777/wechatServer
+          '^/wechatServer': '/wechat',
+        },
+      },
+      
+    }
+  },
+
   configureWebpack: (config) => {
     
 
@@ -47,7 +62,7 @@ module.exports = {
   },
 
 
-  chainWebpack: config => {
+  chainWebpack: (config)=> {
     // 对vue-cli内部的 webpack 配置进行更细粒度的修改。
     // 添加CDN参数到htmlWebpackPlugin配置中， 详见public/index.html 修改
     config.plugin('html').tap(args => {
