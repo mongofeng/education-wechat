@@ -18,6 +18,15 @@ import Component from 'vue-class-component';
 // import getOauth2 from '@/utils/oauth2';
 // getOauth2();
 
+console.log(process.env.VUE_APP_CLEAR_STORE);
+
+if (process.env.VUE_APP_CLEAR_STORE.toLowerCase() === 'true') {
+  console.log('清除store');
+  // window.localStorage.clear();
+  localStorage.removeItem('openid');
+  localStorage.removeItem('wechat');
+}
+
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',

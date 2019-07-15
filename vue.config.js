@@ -25,7 +25,7 @@ module.exports = {
         target: 'http://127.0.0.1:7777',
         ws: true,
         changeOrigin: true,
-        pathRewrite: { // 改变路径重定向,http://127.0.0.1:7777/wechatServer
+        pathRewrite: { // 改变路径重定向
           '^/wechatServer': '/wechat',
         },
       },
