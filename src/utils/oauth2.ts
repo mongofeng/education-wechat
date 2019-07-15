@@ -35,4 +35,5 @@ export default function(): void {
 // 测试
 // http://118.31.227.99
 // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6bce565776a81ced&redirect_uri=http%3A%2F%2Fyangjin-art.top%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_base#wechat_redirect
-// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6bce565776a81ced&redirect_uri=http%3A%2F%2F118.31.227.99%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_base&state=123#wechat_redirect
+
+// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bb9b35bb6d4f980&redirect_uri=http%3A%2F%2Fyangjin-art.top%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_base#wechat_redirect
