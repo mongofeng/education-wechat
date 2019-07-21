@@ -1,21 +1,31 @@
 <template>
   <div class="education-warper bg warp-direction">
-    <!-- <div class="title mb20 bg-white">课程中心</div> -->
-    <div class="warp-direction__scroller">
-      <mu-expansion-panel :expand="true"  v-for="item in list" :key="item.day">
-        <div slot="header">{{item.name}}</div>
-        <mu-row>
-          <mu-col span="6" v-for="(course, key) in item.children" :key="key">
-            <div class="paper pb10">
-                <div class="paper_title pb5">{{DAY_LABEL[key]}}</div>
-                <div class="paper_content">{{course.length ? course.join(',') : '暂无课程'}}</div>
-              </div>
-            </mu-col>
-        </mu-row>
-        
-      </mu-expansion-panel>
+  
+    <mu-data-table border :columns="columns"  :data="list" :min-col-width="50">
+      <template slot-scope="scope">
+        <td>{{scope.row.name}}</td>
+        <td class="is-left" style="padding-left:5px;padding-right: 0">
+          <div v-for="(item, index) of scope.row[monrning]" :key="index">
+            <div>{{item.name}}</div>
+            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+          </div>
+        </td>
 
-    </div>
+        <td class="is-left" style="padding-left:5px;padding-right: 0">
+          <div v-for="(item, index) of scope.row[afternoon]" :key="index">
+            <div>{{item.name}}</div>
+            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+          </div>
+        </td>
+
+        <td class="is-left" style="padding-left:5px;padding-right: 0">
+          <div v-for="(item, index) of scope.row[evening]" :key="index">
+            <div>{{item.name}}</div>
+            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+          </div>
+        </td>
+      </template>
+    </mu-data-table>
   </div>
 </template>
 <script lang="ts">
@@ -29,57 +39,13 @@ const {
     sundayTimeStarmp,
 } = getWeek();
 const someModule = namespace('oauth');
-function getList() {
-  return  [
-    {
-      name: '周日',
-      day: 0,
-      children: {
-      },
-    },
-    {
-      name: '周一',
-      day: 1,
-      children: {
-      },
-    },
-    {
-      name: '周二',
-      day: 2,
-      children: {
-      },
-    },
-    {
-      name: '周三',
-      day: 3,
-      children: {
-      },
-    },
-    {
-      name: '周四',
-      day: 4,
-      children: {
-      },
-    },
-    {
-      name: '周五',
-      day: 5,
-      children: {
-      },
-    },
-    {
-      name: '周六',
-      day: 6,
-      children: {
-      },
-    },
-  ];
-}
+
 @Component
 export default class Course extends Vue {
 
 
-  get condition() {
+
+      get condition() {
     const condition: any = {
         limit: 1000,
         page: 1,
@@ -101,14 +67,29 @@ export default class Course extends Vue {
   }
 
 
+
+
+
   @someModule.State('userid') public userid!: string;
 
   public page: number = 1;
 
 
+  public monrning = enums.DAY.monrning; // '上午',
+  public afternoon = enums.DAY.afternoon; // '下午',
+  public evening =  enums.DAY.evening; // '晚上',
+
   public list: any[] = getList();
 
   public DAY_LABEL = enums.DAY_LABEL;
+
+
+  public columns = [
+      { title: '时间', name: 'name', width: 70},
+      { title: '上午', name: enums.DAY.monrning, align: 'center' },
+      { title: '下午', name: enums.DAY.afternoon, align: 'center' },
+      { title: '晚上', name: enums.DAY.evening , align: 'center' },
+  ];
   private loading: boolean = false;
 
   @Watch('userid', {immediate: true})
@@ -127,28 +108,75 @@ export default class Course extends Vue {
     const {data: {data: {list}}} = await api.getCourserList(this.condition);
     const result: any[] = getList();
     for (const item of list) {
-      if (this.list[item.day].children[item.time]) {
-        result[item.day].children[item.time].push(item.name);
+      const {name, startTime, endTime} = item
+      if (result[item.day][item.time].length) {
+        result[item.day][item.time].push({name, startTime, endTime});
       } else {
-        result[item.day].children[item.time] = [item.name];
+        result[item.day][item.time] = [{name, startTime, endTime}];
       }
     }
 
-    this.list = result.filter((item) => {
-      return item.children && Object.keys(item.children).length;
-    });
+    this.list = result;
+    console.log(result);
   }
+}
+
+
+function getList() {
+  return  [
+    {
+      name: '周日',
+      day: 0,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+    {
+      name: '周一',
+      day: 1,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+    {
+      name: '周二',
+      day: 2,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+
+    {
+      name: '周三',
+      day: 3,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+    {
+      name: '周四',
+      day: 4,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+    {
+      name: '周五',
+      day: 5,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+    {
+      name: '周六',
+      day: 6,
+      [enums.DAY.monrning]: [], // '上午',
+      [enums.DAY.afternoon]: [], // '下午',
+      [enums.DAY.evening]: [], // '晚上',
+    },
+  ];
 }
 </script>
-<style lang="scss">
-.paper {
-  &_title {
-    color: #333;
-    font-size: 12px;
-  }
+<style lang="scss" scoped>
 
-  &_content {
-    font-size: 14px;
-  }
-}
 </style>
