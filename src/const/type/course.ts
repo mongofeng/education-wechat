@@ -12,6 +12,6 @@ export interface ICourse {
   endDate: number;
   createDate?: string;
   updateDate?: string;
-  startTime: string
-  endTime: string
+  startTime: string;
+  endTime: string;
 }

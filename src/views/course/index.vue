@@ -108,7 +108,7 @@ export default class Course extends Vue {
     const {data: {data: {list}}} = await api.getCourserList(this.condition);
     const result: any[] = getList();
     for (const item of list) {
-      const {name, startTime, endTime} = item
+      const {name, startTime, endTime} = item;
       if (result[item.day][item.time].length) {
         result[item.day][item.time].push({name, startTime, endTime});
       } else {
