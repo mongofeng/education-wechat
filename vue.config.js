@@ -22,7 +22,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/wechatServer': {
-        target: 'http://127.0.0.1:7777',
+        target: process.env.API,
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向

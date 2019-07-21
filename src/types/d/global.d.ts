@@ -5,7 +5,7 @@ declare interface ILabelVal<T= string> {
 }
 
 
-declare type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
+// declare type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 /**
  * 标签映射
