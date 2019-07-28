@@ -5,7 +5,7 @@
         <template v-for="item in list">
           <mu-list-item :key="item._id" class="pt5 pb5">
             <mu-list-item-action>
-              <mu-icon value="star" color="pink"></mu-icon>
+              <mu-icon value="star" :color="COURSE_HOUR_ACTION_TYPE_COLOR[item.type]"></mu-icon>
             </mu-list-item-action>
 
             <mu-list-item-content>
@@ -43,6 +43,7 @@ export default class HourList extends Vue {
 
   public formatDate = formatDate;
   public COURSE_HOUR_TYPE_LABEL: any = enums.COURSE_HOUR_ACTION_TYPE_LABEL;
+  public COURSE_HOUR_ACTION_TYPE_COLOR: any = enums.COURSE_HOUR_ACTION_TYPE_COLOR;
   public page: number = 1;
   public count: number = 0;
 

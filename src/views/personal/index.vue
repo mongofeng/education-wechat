@@ -29,6 +29,13 @@
         </mu-list-item-action>
         <mu-list-item-title>{{item.title}}</mu-list-item-title>
       </mu-list-item>
+
+      <mu-list-item button :ripple="false" to="/student-package" key="student-package">
+        <mu-list-item-action>
+          <mu-icon value="mail"></mu-icon>
+        </mu-list-item-action>
+        <mu-list-item-title>课程包明细</mu-list-item-title>
+      </mu-list-item>
     </mu-list>
   </div>
 </template>
@@ -38,7 +45,7 @@ import { namespace } from 'vuex-class';
 import * as type from '@/const/type/student';
 import * as enums from '@/const/enum';
 import * as view from '@/const/type/view';
-import * as api from '@/api/student-hour';
+import * as api from '@/api/student-package';
 import * as apiWechat from '@/api/wechat';
 
 type ITab = Pick<view.IMenu, 'icon' | 'title'>;
@@ -59,9 +66,9 @@ export default class Personal extends Vue {
   private sex: number = 1;
 
   private totalInfo = {
-    total: 0,
-    used: 0,
-    reset: 0,
+    count: 0,
+      surplus: 0,
+      used: 0,
   };
 
   get totalList() {
@@ -72,11 +79,11 @@ export default class Personal extends Vue {
     },
     {
       title: '总计课时',
-      total: this.totalInfo.total,
+      total: this.totalInfo.count,
     },
     {
       title: '剩余课时',
-      total: this.totalInfo.reset,
+      total: this.totalInfo.surplus,
     },
   ];
   }
@@ -124,7 +131,7 @@ export default class Personal extends Vue {
   @Watch('userid', {immediate: true})
   public onUserIdChange(val: string) {
     if (!val) { return; }
-    // this.fetchData();
+    this.fetchTotalHours();
   }
 
   @Watch('openid', {immediate: true})
@@ -134,11 +141,38 @@ export default class Personal extends Vue {
   }
 
 
-  public async fetchData()  {
-    const {data: {data}} = await api.getStudentHour(this.userid);
-    this.totalInfo.total = data.num;
-    this.totalInfo.used = data.used;
-    this.totalInfo.reset = data.num - data.used;
+
+
+  public async fetchTotalHours() {
+    const params = {
+      query: {
+        studentIds: this.userid,
+        isActive: true,
+      },
+      limit: 1000,
+      page: 1,
+      sort: { activeTime: 1 },
+    };
+    const { data: { data: { list } } } = await api.getSimpleStudentPackageList(params);
+    const initTatal = {
+      count: 0,
+      surplus: 0,
+      used: 0,
+    };
+    this.totalInfo = list.reduce((initVal: typeof initTatal, item) => {
+      const {
+        count,
+        surplus,
+        used,
+      } = initVal;
+
+      return {
+        count: count + item.count,
+        surplus: surplus + item.surplus,
+        used: used + item.used,
+      };
+    }, initTatal);
+
   }
 
 

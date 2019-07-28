@@ -1,26 +1,27 @@
 <template>
   <div class="education-warper bg warp-direction">
-    <mu-data-table border :columns="columns" :data="list" :min-col-width="50">
+    <mu-data-table  :columns="columns" :data="list" :min-col-width="50">
       <template slot-scope="scope">
         <td>{{scope.row.name}}</td>
-        <td class="is-left" style="padding-left:5px;padding-right: 0">
+        <td class="is-center" >
           <div v-for="(item, index) of scope.row[monrning]" :key="index">
             <div>{{item.name}}</div>
-            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+            <!-- <div>{{`${item.startTime}-${item.endTime}`}}</div> -->
+            <div>{{item.startTime}}</div>
           </div>
         </td>
 
-        <td class="is-left" style="padding-left:5px;padding-right: 0">
+        <td class="is-center" >
           <div v-for="(item, index) of scope.row[afternoon]" :key="index">
             <div>{{item.name}}</div>
-            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+             <div>{{item.startTime}}</div>
           </div>
         </td>
 
-        <td class="is-left" style="padding-left:5px;padding-right: 0">
+        <td class="is-center" >
           <div v-for="(item, index) of scope.row[evening]" :key="index">
             <div>{{item.name}}</div>
-            <div>{{`${item.startTime}-${item.endTime}`}}</div>
+             <div>{{item.startTime}}</div>
           </div>
         </td>
       </template>
@@ -99,11 +100,14 @@ export default class Course extends Vue {
     const result: any[] = getList();
     for (const item of list) {
       const { name, startTime, endTime } = item;
-      if (result[item.day][item.time].length) {
-        result[item.day][item.time].push({ name, startTime, endTime });
-      } else {
-        result[item.day][item.time] = [{ name, startTime, endTime }];
+      for (const key of item.day) {
+        if (result[key][item.time].length) {
+          result[key][item.time].push({ name, startTime, endTime });
+        } else {
+          result[key][item.time] = [{ name, startTime, endTime }];
+        }
       }
+
     }
 
     this.list = result;

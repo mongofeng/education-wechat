@@ -11,6 +11,8 @@ const HourList = () => import (/* webpackChunkName: "hour" */ '@/views/hour/comp
 
 const Register = () => import (/* webpackChunkName: "register" */ '@/views/register/index.vue');
 
+const StudentPackage = () => import (/* webpackChunkName: "student-package" */ '@/views/student-package/index.vue');
+
 
 Vue.use(Router);
 
@@ -79,6 +81,15 @@ const router = new Router({
         depth: 7,
       },
       component: Register,
+    },
+    {
+      path: '/student-package',
+      name: 'StudentPackage',
+      component: StudentPackage,
+      meta: {
+        title: '课程包',
+        depth: 8,
+      },
     },
   ],
 });

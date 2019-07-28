@@ -23,6 +23,14 @@ export function getStudentPackageList(params: any): ApiListData<IStudentPackage>
 
 /**
  *
+ * @param params 查询参数
+ */
+export function getSimpleStudentPackageList(params: any): ApiListData<IStudentPackage> {
+    return http.post('student-package/simple-list', params);
+}
+
+/**
+ *
  * @param id 学员课程包的id
  */
 export function getPackage(id: string): ApiResponse<IStudentPackage> {

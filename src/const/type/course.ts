@@ -6,12 +6,12 @@ export interface ICourse {
   studentIds: string[];
   status: enums.COURSE_STATUS;
   desc: string;
-  day: enums.WEEK; // 一周
+  day: enums.WEEK[]; // 一周
   time: enums.DAY;
   startDate: number;
   endDate: number;
   createDate?: string;
   updateDate?: string;
-  startTime: string;
-  endTime: string;
+  endTime?: string;
+  startTime?: string;
 }
