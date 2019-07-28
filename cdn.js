@@ -4,7 +4,7 @@ const cdn = {
       css: [
         'https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css',
         'https://unpkg.com/muse-ui/dist/muse-ui.css',
-        'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
+        // 'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
       ],
       js: []
   },
@@ -13,7 +13,7 @@ const cdn = {
       css: [
         'https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css',
         'https://unpkg.com/muse-ui/dist/muse-ui.css',
-        'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
+        // 'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
       ],
       js: [
         'https://lib.baomitu.com/vue/2.6.6/vue.min.js',
@@ -23,7 +23,7 @@ const cdn = {
         'https://unpkg.com/muse-ui/dist/muse-ui.js',
         'https://unpkg.com/muse-ui-message/dist/muse-ui-message.js',
         'https://unpkg.com/muse-ui-toast/dist/muse-ui-toast.js',
-        'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.js'
+        // 'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.js'
       ]
   }
 }
@@ -39,7 +39,7 @@ const externals = {
   'muse-ui': 'MuseUI',
   'muse-ui-message': 'MuseUIMessage',
   'muse-ui-toast': 'MuseUIToast',
-  'muse-ui-loading': 'MuseUILoading'
+  // 'muse-ui-loading': 'MuseUILoading'
 }
 
 exports.externals = externals

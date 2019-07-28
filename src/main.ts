@@ -13,7 +13,7 @@ import '@/assets/scss/index.scss';
 import MuseUI from 'muse-ui';
 import MuseUIMessage from 'muse-ui-message';
 import MuseUIToast from 'muse-ui-toast';
-import MuseUILoading from 'muse-ui-loading';
+// import MuseUILoading from 'muse-ui-loading';
 
 import Component from 'vue-class-component';
 
@@ -41,9 +41,8 @@ Vue.use(MuseUIToast, {
 Vue.use(MuseUIMessage);
 Vue.use(MuseUI);
 
-Vue.use(MuseUILoading);
+// Vue.use(MuseUILoading);
 
-console.log(MuseUILoading);
 
 Vue.config.productionTip = false;
 
