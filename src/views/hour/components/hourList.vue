@@ -3,7 +3,12 @@
     <mu-load-more :loading="loading" @load="loadList" v-if="list.length" >
       <mu-list>
         <template v-for="item in list">
-          <mu-list-item :key="item._id" class="pt5 pb5">
+          <mu-list-item :key="item._id" class="pt5 pb5" :to="{
+            name: 'HourDetail',
+            params: {
+              id: item._id
+            }
+          }">
             <mu-list-item-action>
               <mu-icon value="star" :color="COURSE_HOUR_ACTION_TYPE_COLOR[item.type]"></mu-icon>
             </mu-list-item-action>

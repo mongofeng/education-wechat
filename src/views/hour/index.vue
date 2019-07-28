@@ -35,9 +35,9 @@ import * as enums from '@/const/enum';
 type ITab = Omit<view.IMenu, 'icon'>;
 @Component
 export default class Hour extends Mixins(TransitionRoute) {
-  private active: string = 'all';
+  private active: string = String(enums.COURSE_HOUR_ACTION_TYPE.buy);
 
-  private menu: ITab[] = Object.keys(enums.COURSE_HOUR_ACTION_TYPE_LABEL).reduce((initVal, key) => {
+  private menu: ITab[] = Object.keys(enums.COURSE_HOUR_ACTION_TYPE_LABEL).reduce((initVal: any[], key) => {
     initVal.push({
       title: (enums.COURSE_HOUR_ACTION_TYPE_LABEL as any)[key],
       name: key,
@@ -50,16 +50,7 @@ export default class Hour extends Mixins(TransitionRoute) {
     });
 
     return initVal;
-  }, [{
-    title: '总计课时',
-    name: 'all',
-    path: {
-      name: 'hourType',
-      params: {
-        type: 'all',
-      },
-    },
-  }]);
+  }, []);
 
 
   public async mounted() {

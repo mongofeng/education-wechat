@@ -12,7 +12,7 @@ const HourList = () => import (/* webpackChunkName: "hour" */ '@/views/hour/comp
 const Register = () => import (/* webpackChunkName: "register" */ '@/views/register/index.vue');
 
 const StudentPackage = () => import (/* webpackChunkName: "student-package" */ '@/views/student-package/index.vue');
-
+const HourDetail = () => import (/* webpackChunkName: "hour" */ '@/views/hour/detail.vue');
 
 Vue.use(Router);
 
@@ -46,7 +46,10 @@ const router = new Router({
           },
           component: Hour,
           redirect: {
-            path: 'hour/hour-type/all',
+            name: 'hourType',
+            params: {
+              type: String(enums.COURSE_HOUR_ACTION_TYPE.buy),
+            },
           },
           children: [
             {
@@ -89,6 +92,16 @@ const router = new Router({
       meta: {
         title: '课程包',
         depth: 8,
+      },
+    },
+    {
+      path: '/hour/detail/:id',
+      name: 'HourDetail',
+      component: HourDetail,
+      props: true,
+      meta: {
+        title: '课时详情',
+        depth: 9,
       },
     },
   ],
