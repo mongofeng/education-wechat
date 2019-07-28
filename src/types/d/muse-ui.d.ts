@@ -10,3 +10,10 @@ declare module 'muse-ui-toast' {
   const a: Toast;
   export default a;
 }
+
+
+declare module 'muse-ui-loading' {
+  import Loading from 'muse-ui-loading/types';
+  const a: Loading;
+  export default a;
+}

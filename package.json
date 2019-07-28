@@ -14,6 +14,7 @@
     "compression-webpack-plugin": "^3.0.0",
     "core-js": "^2.6.5",
     "muse-ui": "^3.0.2",
+    "muse-ui-loading": "^0.2.0",
     "muse-ui-message": "^0.2.1",
     "muse-ui-toast": "^0.3.0",
     "vconsole": "^3.3.2",

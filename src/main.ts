@@ -9,9 +9,11 @@ import '@/assets/scss/index.scss';
  */
 // import 'muse-ui/dist/muse-ui.css';
 // import 'muse-ui-message/dist/muse-ui-message.css';
+// import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css, require
 import MuseUI from 'muse-ui';
 import MuseUIMessage from 'muse-ui-message';
 import MuseUIToast from 'muse-ui-toast';
+import MuseUILoading from 'muse-ui-loading';
 
 import Component from 'vue-class-component';
 
@@ -38,6 +40,10 @@ Vue.use(MuseUIToast, {
 });
 Vue.use(MuseUIMessage);
 Vue.use(MuseUI);
+
+Vue.use(MuseUILoading);
+
+console.log(MuseUILoading);
 
 Vue.config.productionTip = false;
 
