@@ -1,42 +1,44 @@
 <template>
   <div class="education-warper bg">
-    <mu-card-header
-      :title="nickName"
-      :subTitle="SEX_LABEL[sex]"
-      class="bg-white mb20"
-    >
-      <mu-avatar slot="avatar">
-        <img :src="headimgurl">
-      </mu-avatar>
-    </mu-card-header>
+    <div class="education-warper-container">
+      <mu-card-header
+        :title="nickName"
+        :subTitle="SEX_LABEL[sex]"
+        class="bg-white mb20"
+      >
+        <mu-avatar slot="avatar">
+          <img :src="headimgurl">
+        </mu-avatar>
+      </mu-card-header>
 
-    <!-- 统计栏 -->
-    <mu-container class="mb20 bg-white">
-      <mu-row gutter class="grid-warp">
-        <mu-col span="4" v-for="(item, index) in totalList" :key="index" class="p10">
-          <div class="grid-cell">
-            <div class="grid-cell__count pb5">{{item.total}}</div>
-            <div class="grid-cell__title pt5 pb5">{{item.title}}</div>
-          </div>
-        </mu-col>
-      </mu-row>
-    </mu-container>
+      <!-- 统计栏 -->
+      <mu-container class="mb20 bg-white">
+        <mu-row gutter class="grid-warp">
+          <mu-col span="4" v-for="(item, index) in totalList" :key="index" class="p10">
+            <div class="grid-cell">
+              <div class="grid-cell__count pb5">{{item.total}}</div>
+              <div class="grid-cell__title pt5 pb5">{{item.title}}</div>
+            </div>
+          </mu-col>
+        </mu-row>
+      </mu-container>
 
-    <mu-list class="bg-white">
-      <mu-list-item button :ripple="false" v-for="item in options" :key="item.icon">
-        <mu-list-item-action>
-          <mu-icon :value="item.icon"></mu-icon>
-        </mu-list-item-action>
-        <mu-list-item-title>{{item.title}}</mu-list-item-title>
-      </mu-list-item>
+      <mu-list class="bg-white">
+        <mu-list-item button :ripple="false" v-for="item in options" :key="item.icon">
+          <mu-list-item-action>
+            <mu-icon :value="item.icon"></mu-icon>
+          </mu-list-item-action>
+          <mu-list-item-title>{{item.title}}</mu-list-item-title>
+        </mu-list-item>
 
-      <mu-list-item button :ripple="false" to="/student-package" key="student-package">
-        <mu-list-item-action>
-          <mu-icon value="mail"></mu-icon>
-        </mu-list-item-action>
-        <mu-list-item-title>课程包明细</mu-list-item-title>
-      </mu-list-item>
-    </mu-list>
+        <mu-list-item button :ripple="false" to="/student-package" key="student-package">
+          <mu-list-item-action>
+            <mu-icon value="mail"></mu-icon>
+          </mu-list-item-action>
+          <mu-list-item-title>课程包明细</mu-list-item-title>
+        </mu-list-item>
+      </mu-list>
+    </div>
   </div>
 </template>
 <script lang="ts">

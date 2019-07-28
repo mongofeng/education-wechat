@@ -1,5 +1,6 @@
 <template>
-  <div class="education-warper bg warp-direction">
+  <div class="education-warper bg">
+    <div class="education-warper-container">
     <mu-data-table  :columns="columns" :data="list" :min-col-width="50">
       <template slot-scope="scope">
         <td>{{scope.row.name}}</td>
@@ -26,6 +27,7 @@
         </td>
       </template>
     </mu-data-table>
+    </div>
   </div>
 </template>
 <script lang="ts">

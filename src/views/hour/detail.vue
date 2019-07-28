@@ -25,11 +25,11 @@ import { IHour } from '@/const/type/hour';
 @Component
 export default class HourDetail extends Vue {
   @Prop()
-  id!:string
-  
-  data: any = {}
-  mounted () {
-    this.fetchData()
+  public id!: string;
+
+  public data: any = {};
+  public mounted() {
+    this.fetchData();
   }
 
 
@@ -54,18 +54,18 @@ export default class HourDetail extends Vue {
         label: '学时数量',
         value: `${arr.num}学时`,
       },
-    
+
       course: {
         label: '课程详情',
         value: (arr.course || []).map((item: any) => {
-          return `${item.name}:${item.count}课时`
+          return `${item.name}:${item.count}课时`;
         }),
-        array: true
+        array: true,
       },
       desc: {
         label: '备注',
-        value: arr.desc
-      }
+        value: arr.desc,
+      },
     };
 
     return fileds;
