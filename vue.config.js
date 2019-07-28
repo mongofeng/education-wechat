@@ -25,9 +25,9 @@ module.exports = {
         target: process.env.API,
         ws: true,
         changeOrigin: true,
-        // pathRewrite: { // 改变路径重定向
-        //   '^/wechatServer': '/wechat',
-        // },
+        pathRewrite: { // 改变路径重定向
+          '^/wechatServer': '/wechat',
+        },
       },
       
     }

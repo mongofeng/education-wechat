@@ -4,7 +4,6 @@
     
     <!-- tab栏 -->
     <mu-tabs
-      @hook:updated="pudate" 
       :value.sync="active" 
       inverse 
       full-width
@@ -32,44 +31,41 @@
 import { Component, Vue, Mixins } from 'vue-property-decorator';
 import * as view from '@/const/type/view';
 import TransitionRoute from '@/mixins/transtion';
+import * as enums from '@/const/enum';
 type ITab = Omit<view.IMenu, 'icon'>;
 @Component
 export default class Hour extends Mixins(TransitionRoute) {
   private active: string = 'all';
 
-  private menu: ITab[] = [
-    {
-      title: '总计课时',
-      name: 'all',
+  private menu: ITab[] = Object.keys(enums.COURSE_HOUR_ACTION_TYPE_LABEL).reduce((initVal, key) => {
+    initVal.push({
+      title: (enums.COURSE_HOUR_ACTION_TYPE_LABEL as any)[key],
+      name: key,
       path: {
-        name: 'all',
+        name: 'hourType',
+        params: {
+          type: key,
+        },
+      },
+    });
+
+    return initVal;
+  }, [{
+    title: '总计课时',
+    name: 'all',
+    path: {
+      name: 'hourType',
+      params: {
+        type: 'all',
       },
     },
-    {
-      title: '增加课时',
-      name: 'increase',
-      path: {
-        name: 'increase',
-      },
-    },
-    {
-      title: '已用课时',
-      name: 'decrease',
-      path: {
-        name: 'decrease',
-      },
-    },
-  ];
+  }]);
 
 
   public async mounted() {
     this.$once('hook:beforeDestroy', () => {
       console.log('destory');
     });
-  }
-
-  public pudate() {
-    console.log(1111);
   }
 }
 </script>

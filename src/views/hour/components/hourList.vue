@@ -1,6 +1,6 @@
 <template>
   <mu-container ref="container" class="warp-direction__scroller">
-    <mu-load-more :loading="loading" @load="load" v-if="list.length">
+    <mu-load-more :loading="loading" @load="loadList" v-if="list.length">
       <mu-list>
         <template v-for="item in list">
           <mu-list-item :key="item._id" class="pt5 pb5">
@@ -14,7 +14,7 @@
             </mu-list-item-content>
 
             <mu-list-item-action >
-              <mu-list-item-after-text>{{item.num}}h</mu-list-item-after-text>
+              <mu-list-item-after-text>{{item.num}}课时</mu-list-item-after-text>
             </mu-list-item-action>
           </mu-list-item>
           <mu-divider :key="item._id + 'key'" />
@@ -42,7 +42,7 @@ export default class HourList extends Vue {
   public type!: string | number;
 
   public formatDate = formatDate;
-  public COURSE_HOUR_TYPE_LABEL: any = enums.COURSE_HOUR_TYPE_LABEL;
+  public COURSE_HOUR_TYPE_LABEL: any = enums.COURSE_HOUR_ACTION_TYPE;
   public page: number = 1;
   public count: number = 0;
 
@@ -55,7 +55,7 @@ export default class HourList extends Vue {
   get condition() {
     const condition: any = {
       limit: 10,
-      page: 1,
+      page: this.page,
       query: {
         studentId: {
           $eq: this.userid,
@@ -87,10 +87,11 @@ export default class HourList extends Vue {
     }
     const {data: {data: {list, count}}} = await api.getHourrList(this.condition);
     this.count = count;
+    this.page += 1;
     this.list = this.list.concat(list);
   }
 
-  private async load() {
+  private async loadList() {
     if (this.list.length >= this.count) { return; }
     this.loading = true;
     await this.fetchData();

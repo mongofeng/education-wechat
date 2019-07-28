@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-// route level code-splitting
-// this generates a separate chunk (about.[hash].js) for this route
-// which is lazy-loaded when the route is visited.
+import * as enums from '@/const/enum';
 const Personal = () => import (/* webpackChunkName: "personal" */ '@/views/personal/index.vue');
 const Course = () => import (/* webpackChunkName: "course" */ '@/views/course/index.vue');
 
@@ -15,6 +13,8 @@ const Register = () => import (/* webpackChunkName: "register" */ '@/views/regis
 
 
 Vue.use(Router);
+
+
 
 const router = new Router({
   routes: [
@@ -44,37 +44,17 @@ const router = new Router({
           },
           component: Hour,
           redirect: {
-            name: 'all',
+            path: 'hour/hour-type/all',
           },
           children: [
             {
-              path: 'all',
-              name: 'all',
+              path: 'hour-type/:type',
+              name: 'hourType',
               component: HourList,
-              props: { type: 'all' },
+              props: true,
               meta: {
                 title: '课时列表',
                 depth: 3,
-              },
-            },
-            {
-              path: 'increase',
-              name: 'increase',
-              props: { type: 1 },
-              component: HourList,
-              meta: {
-                title: '课时列表',
-                depth: 4,
-              },
-            },
-            {
-              path: 'decrease',
-              name: 'decrease',
-              props: { type: 2 },
-              component: HourList,
-              meta: {
-                title: '课时列表',
-                depth: 5,
               },
             },
           ],

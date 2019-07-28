@@ -124,7 +124,7 @@ export default class Personal extends Vue {
   @Watch('userid', {immediate: true})
   public onUserIdChange(val: string) {
     if (!val) { return; }
-    this.fetchData();
+    // this.fetchData();
   }
 
   @Watch('openid', {immediate: true})
