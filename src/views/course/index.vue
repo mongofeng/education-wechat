@@ -36,7 +36,7 @@ import { getWeek } from '@/utils/time';
 import { namespace } from 'vuex-class';
 import * as api from '@/api/course';
 import * as enums from '@/const/enum';
-const { mondayTimeStarmp, sundayTimeStarmp } = getWeek();
+const { monday, sunday } = getWeek();
 const someModule = namespace('oauth');
 
 @Component
@@ -49,12 +49,12 @@ export default class Course extends Vue {
         studentIds: {
           $in: [this.userid],
         },
-        startDate: {
-          $lte: sundayTimeStarmp,
-        },
-        endDate: {
-          $gte: mondayTimeStarmp,
-        },
+         startDate: {
+                $lte: sunday,
+            },
+            endDate: {
+                $gte: monday,
+            },
       },
       sort: { createDate: -1 },
     };
@@ -103,6 +103,16 @@ export default class Course extends Vue {
     for (const item of list) {
       const { name, startTime, endTime } = item;
       for (const key of item.day) {
+        const endDate = new Date(item.endDate);
+        if (monday) {
+                const currentDate  = new Date(monday.getTime());
+                const  offset = (key -  1) >=  0 ? (key -  1) : 6;
+                currentDate.setDate(currentDate.getDate() + offset);
+
+                if (endDate.getTime() < currentDate.getTime()) {
+                    continue;
+                }
+            }
         if (result[key][item.time].length) {
           result[key][item.time].push({ name, startTime, endTime });
         } else {
@@ -112,7 +122,7 @@ export default class Course extends Vue {
 
     }
 
-    this.list = result;
+    this.list = result.slice(1).concat(result[0]);
     console.log(result);
   }
 }

@@ -1,4 +1,3 @@
-import formateDate from './format-date';
 export function getWeek(dateStr?: string) {
 
     const nowDate = dateStr ? new Date(dateStr) : new Date();
@@ -6,14 +5,8 @@ export function getWeek(dateStr?: string) {
 
     // 星期一
     const mondaySet = day === 0 ? 6 : day - 1;
-
     nowDate.setDate(nowDate.getDate() - mondaySet);
-    const monday = nowDate;
-    console.log(monday);
-
-    const mondayStr = formateDate(monday, {
-        format: 'yyyy-MM-dd 00:00:00',
-    });
+    const monday = new Date(nowDate.getTime());
 
     const mYear = monday.getFullYear();
     const mMonth = monday.getMonth();
@@ -21,24 +14,13 @@ export function getWeek(dateStr?: string) {
 
     const mondayTime = new Date(mYear, mMonth, mDay, 0, 0, 0);
     const mondayTimeStarmp = mondayTime.getTime();
-    console.log(mYear, mMonth, mDay, mondayTime, mondayTimeStarmp);
-
-    console.log(new Date(mondayStr));
-    console.log(new Date(mondayStr).getTime()); // NaN
-
 
 
 
     // 星期日
     nowDate.setDate(nowDate.getDate() + 6);
     const sunday = nowDate;
-    console.log(sunday);
 
-
-
-    const sundayStr = formateDate(sunday, {
-        format: 'yyyy-MM-dd 23:59:59',
-    });
 
     const sYear = sunday.getFullYear();
     const sMonth = sunday.getMonth();
@@ -47,16 +29,10 @@ export function getWeek(dateStr?: string) {
     const sundayTime = new Date(sYear, sMonth, sDay, 23, 59, 59);
     const sundayTimeStarmp = sundayTime.getTime();
 
-    console.log(sYear, sMonth, sDay, sundayTime, sundayTimeStarmp);
-
-    console.log(new Date(sundayStr));
-    console.log(new Date(sundayStr).getTime()); // NaN
 
     const result = {
-        sunday,
-        monday,
-        mondayStr,
-        sundayStr,
+        sunday: sundayTime,
+        monday: mondayTime,
         mondayTimeStarmp,
         sundayTimeStarmp,
     };

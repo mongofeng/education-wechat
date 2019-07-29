@@ -19,7 +19,7 @@ type CompareType1 = '$gt' | '$lt' | '$lte' | '$gte' | '$ne';
 type CompareType2 = '$eq';
 type CompareType3 = '$in' | '$nin';
 
-type QueryValue = Record<CompareType1, number> &
+type QueryValue = Record<CompareType1, number | string> &
 Record<CompareType2, string | number> &
 Record<CompareType3, number[] | string[]>;
 
