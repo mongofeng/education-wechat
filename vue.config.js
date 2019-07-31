@@ -26,7 +26,7 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向
-          '^/wechatServer': '/wechat',
+          '^/wechatServer': process.env.IS_DEV === 'true' ? '/wechat' : '/wechatServer',
         },
       },
       

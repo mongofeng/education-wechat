@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --mode dev",
+    "sit": "vue-cli-service serve --mode sit",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "docker": "vue-cli-service build --no-clean",
