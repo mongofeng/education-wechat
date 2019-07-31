@@ -1,8 +1,9 @@
+// icon:https://github.com/google/material-design-icons
 const cdn = {
   // 开发环境
   dev: {
       css: [
-        'https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css',
+        'https://fonts.googleapis.com/icon?family=Material+Icons',
         'https://unpkg.com/muse-ui/dist/muse-ui.css',
         // 'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
       ],
@@ -11,7 +12,7 @@ const cdn = {
   // 生产环境
   build: {
       css: [
-        'https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css',
+        'https://fonts.googleapis.com/icon?family=Material+Icons',
         'https://unpkg.com/muse-ui/dist/muse-ui.css',
         // 'https://unpkg.com/muse-ui-loading/dist/muse-ui-loading.all.css'
       ],
@@ -29,6 +30,7 @@ const cdn = {
 }
 /**
  * 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)
+
  * package：全局变量
  */
 const externals = {
