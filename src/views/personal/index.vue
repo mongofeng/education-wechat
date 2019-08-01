@@ -12,7 +12,7 @@
       </mu-card-header>
 
       <!-- 统计栏 -->
-      <mu-container class="mb20 bg-white">
+      <mu-container class="mb20 bg-white" >
         <mu-row gutter class="grid-warp">
           <mu-col span="4" v-for="(item, index) in totalList" :key="index" class="p10">
             <div class="grid-cell">
@@ -69,8 +69,10 @@ export default class Personal extends Vue {
 
   private totalInfo = {
     count: 0,
-      surplus: 0,
-      used: 0,
+    surplus: 0,
+    used: 0,
+    unActiveCount: 0,
+    activeCount: 0,
   };
 
   get totalList() {
@@ -149,7 +151,7 @@ export default class Personal extends Vue {
     const params = {
       query: {
         studentIds: this.userid,
-        isActive: true,
+        // isActive: true,
       },
       limit: 1000,
       page: 1,
@@ -160,18 +162,24 @@ export default class Personal extends Vue {
       count: 0,
       surplus: 0,
       used: 0,
+      unActiveCount: 0,
+      activeCount: 0,
     };
     this.totalInfo = list.reduce((initVal: typeof initTatal, item) => {
       const {
         count,
         surplus,
         used,
+        unActiveCount,
+        activeCount,
       } = initVal;
 
       return {
         count: count + item.count,
         surplus: surplus + item.surplus,
         used: used + item.used,
+        unActiveCount: unActiveCount + (item.isActive ? 0 : item.count),
+        activeCount: activeCount + (item.isActive ? item.count : 0),
       };
     }, initTatal);
 
@@ -186,6 +194,8 @@ export default class Personal extends Vue {
     this.nickName = data.nickname;
     this.sex = data.sex;
   }
+
+
 }
 </script>
  <style lang="scss" scoped>
@@ -202,4 +212,3 @@ export default class Personal extends Vue {
 }
 </style>
 
- 

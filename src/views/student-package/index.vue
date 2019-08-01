@@ -1,5 +1,17 @@
 <template>
   <div class="education-warper bg warp-direction">
+    <!-- 统计栏 -->
+<!--    <mu-container class="mb20 bg-white">
+      <mu-row gutter class="grid-warp">
+        <mu-col span="4" v-for="(item, index) in totalList" :key="index" class="p10">
+          <div class="grid-cell">
+            <div class="grid-cell__count pb5">{{item.total}}</div>
+            <div class="grid-cell__title pt5 pb5">{{item.title}}</div>
+          </div>
+        </mu-col>
+      </mu-row>
+    </mu-container>-->
+
     <div class="warp-direction__scroller">
       <mu-expansion-panel   v-for="item in list" :key="item._id">
         <div slot="header">{{item.package && item.package.name}}</div>
@@ -9,7 +21,7 @@
             <div class="value">{{stu.value}}</div>
           </mu-list-item>
         </mu-list>
-        
+
       </mu-expansion-panel>
 
     </div>
@@ -28,7 +40,38 @@ const someModule = namespace('oauth');
 export default class Course extends Vue {
   @someModule.State('userid') public userid!: string;
   public list: any[] = [];
-  private loading: boolean = false;
+  private totalInfo = {
+    count: 0,
+    surplus: 0,
+    used: 0,
+    unActiveCount: 0,
+    activeCount: 0,
+  };
+
+  get totalList() {
+    return [
+      {
+        title: '已用课时',
+        total: this.totalInfo.used,
+      },
+      {
+        title: '剩余课时',
+        total: this.totalInfo.surplus,
+      },
+      {
+        title: '待激活课时',
+        total: this.totalInfo.unActiveCount,
+      },
+      {
+        title: '激活课时',
+        total: this.totalInfo.activeCount,
+      },
+      {
+        title: '总计课时',
+        total: this.totalInfo.count,
+      },
+    ];
+  }
 
   @Watch('userid', {immediate: true})
   public onUserIdChange(val: string) {
@@ -39,7 +82,7 @@ export default class Course extends Vue {
 
   public async fetchData(reset?: boolean) {
     const {data: {data: {list}}} = await api.getStudentPackageList({
-      studentId: this.userid,
+      studentIds: this.userid,
     });
     this.list = list.map((item) => {
       return {
@@ -47,6 +90,31 @@ export default class Course extends Vue {
         fields: this.getFields(item),
       };
     });
+
+    const initTatal = {
+      count: 0,
+      surplus: 0,
+      used: 0,
+      unActiveCount: 0,
+      activeCount: 0,
+    };
+    this.totalInfo = list.reduce((initVal: typeof initTatal, item) => {
+      const {
+        count,
+        surplus,
+        used,
+        unActiveCount,
+        activeCount,
+      } = initVal;
+
+      return {
+        count: count + item.count,
+        surplus: surplus + item.surplus,
+        used: used + item.used,
+        unActiveCount: unActiveCount + (item.isActive ? 0 : item.count),
+        activeCount: activeCount + (item.isActive ? item.count : 0),
+      };
+    }, initTatal);
   }
 
 
@@ -99,5 +167,17 @@ export default class Course extends Vue {
 .value {
   flex: auto;
   text-align: right;
+}
+
+.grid-cell {
+  width: 100%;
+  text-align: center;
+  &__title {
+    font-size: 12px;
+    color: #333;
+  }
+  &__count {
+    font-size: 24px;
+  }
 }
 </style>
