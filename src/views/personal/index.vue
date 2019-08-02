@@ -150,6 +150,9 @@ export default class Personal extends Vue {
 
     const { data: { data } } = await api.caculatePackage(params as any);
     const [target] = data;
+    if (!target) {
+      return;
+    }
     const {
       count,
       used,
