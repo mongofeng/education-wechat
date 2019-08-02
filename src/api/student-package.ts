@@ -1,4 +1,4 @@
-import {IStudentPackage} from '../const/type/student-package';
+import {IStudentPackage, ICaculatePackage} from '../const/type/student-package';
 import { ApiListData, ApiResponse } from '../types/api';
 import http from '../utils/http';
 
@@ -50,3 +50,12 @@ export function updateStudentPackage(id: string, params: Partial<IStudentPackage
 export function delStudentPackage(id: string): ApiResponse<IStudentPackage> {
     return http.delete(`student-package/${id}`);
 }
+
+
+/**
+ * 学生毕业和在读的统计
+ * @param params
+ */
+export function caculatePackage(params?: any): ApiResponse<ICaculatePackage[]> {
+    return http.post(`statistics/caculatePackage`, params);
+  }

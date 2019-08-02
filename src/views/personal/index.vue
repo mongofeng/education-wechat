@@ -71,8 +71,9 @@ export default class Personal extends Vue {
     count: 0,
     surplus: 0,
     used: 0,
-    unActiveCount: 0,
-    activeCount: 0,
+    overdueCount: 0,
+    activiteCount: 0,
+    unActiviteCount: 0,
   };
 
   get totalList() {
@@ -96,7 +97,6 @@ export default class Personal extends Vue {
     const address = this.userMsg
       ? `${this.userMsg.province}${this.userMsg.city}${this.userMsg.region}`
       : ``;
-    const age = this.userMsg ? `${this.userMsg.age}岁` : '';
     const phone = this.userMsg ? this.userMsg.phone : '';
     const status = this.userMsg
       ? enums.STUDENT_STATUS_LABEL[this.userMsg.status]
@@ -112,10 +112,6 @@ export default class Personal extends Vue {
       {
         icon: 'album',
         title: sex,
-      },
-      {
-        icon: 'data_usage',
-        title: age,
       },
       {
         icon: 'account_balance',
@@ -149,40 +145,28 @@ export default class Personal extends Vue {
 
   public async fetchTotalHours() {
     const params = {
-      query: {
-        studentIds: this.userid,
-        // isActive: true,
-      },
-      limit: 1000,
-      page: 1,
-      sort: { activeTime: 1 },
+      studentIds: this.userid,
     };
-    const { data: { data: { list } } } = await api.getSimpleStudentPackageList(params);
-    const initTatal = {
-      count: 0,
-      surplus: 0,
-      used: 0,
-      unActiveCount: 0,
-      activeCount: 0,
+
+    const { data: { data } } = await api.caculatePackage(params as any);
+    const [target] = data;
+    const {
+      count,
+      used,
+      surplus,
+      overdueCount,
+      activiteCount,
+      unActiviteCount,
+    } = target;
+
+    this.totalInfo = {
+      count,
+      used,
+      surplus,
+      overdueCount,
+      activiteCount,
+      unActiviteCount,
     };
-    this.totalInfo = list.reduce((initVal: typeof initTatal, item) => {
-      const {
-        count,
-        surplus,
-        used,
-        unActiveCount,
-        activeCount,
-      } = initVal;
-
-      return {
-        count: count + item.count,
-        surplus: surplus + item.surplus,
-        used: used + item.used,
-        unActiveCount: unActiveCount + (item.isActive ? 0 : item.count),
-        activeCount: activeCount + (item.isActive ? item.count : 0),
-      };
-    }, initTatal);
-
   }
 
 
