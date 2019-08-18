@@ -14,6 +14,9 @@ const Register = () => import (/* webpackChunkName: "register" */ '@/views/regis
 const StudentPackage = () => import (/* webpackChunkName: "student-package" */ '@/views/student-package/index.vue');
 const HourDetail = () => import (/* webpackChunkName: "hour" */ '@/views/hour/detail.vue');
 
+
+const Sign = () => import (/* webpackChunkName: "sign" */ '@/views/sign/index.vue');
+
 Vue.use(Router);
 
 
@@ -102,6 +105,15 @@ const router = new Router({
       meta: {
         title: '课时详情',
         depth: 9,
+      },
+    },
+    {
+      path: '/sign',
+      name: 'Sign',
+      component: Sign,
+      meta: {
+        title: '签名',
+        depth: 8,
       },
     },
   ],
