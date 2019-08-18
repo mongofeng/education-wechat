@@ -61,7 +61,7 @@ export default class Register extends Vue {
   public list: type.IStudent[] = [];
 
   public mounted() {
-    this.init();
+    // this.init();
   }
 
   // 绑定微信
@@ -104,10 +104,10 @@ export default class Register extends Vue {
 
     const [user] = result;
 
-    if (user.openId) {
-      this.$toast.error('该学员绑定了微信，请重新输入或者联系管理员');
-      return;
-    }
+    // if (user.openId) {
+    //   this.$toast.error('该学员绑定了微信，请重新输入或者联系管理员');
+    //   return;
+    // }
 
     const { result: confirm } = await this.$confirm(
       `请确认绑定${user.name} ?`,
@@ -120,7 +120,7 @@ export default class Register extends Vue {
       return;
     }
 
-    await api.updateStudent(val.value, {
+    await api.bindingWechat(val.value, {
       openId: this.openid,
     });
 

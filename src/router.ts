@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import * as enums from '@/const/enum';
 const Personal = () => import (/* webpackChunkName: "personal" */ '@/views/personal/index.vue');
+const Student = () => import (/* webpackChunkName: "student" */ '@/views/student/index.vue');
 const Course = () => import (/* webpackChunkName: "course" */ '@/views/course/index.vue');
 
 const Hour = () => import (/* webpackChunkName: "hour" */ '@/views/hour/index.vue');
@@ -63,6 +64,16 @@ const router = new Router({
               },
             },
           ],
+        },
+
+        {
+          path: 'student',
+          name: 'student',
+          meta: {
+            title: '学员中心',
+            depth: 6,
+          },
+          component: Student,
         },
 
         {

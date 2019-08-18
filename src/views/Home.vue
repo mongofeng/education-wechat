@@ -47,6 +47,14 @@ export default class Home extends Mixins(TransitionRoute) {
       },
     },
     {
+      title: '学员中心',
+      name: 'student',
+      icon: 'restore',
+      path: {
+        name: 'student',
+      },
+    },
+    {
       title: '个人中心',
       name: 'personal',
       icon: 'restore',

@@ -5,14 +5,15 @@ import * as type from '@/const/type/student';
 import { ActionContext } from 'vuex';
 
 const ADD_OPENID = 'ADD_OPENID';
-const ADD_USERID = 'ADD_USERID';
+export const ADD_USERID = 'ADD_USERID';
 
 const ADD_USER_MESSAGE = 'ADD_USER_MESSAGE';
-
+const ADD_USER_MESSAGE_LIST = 'ADD_USER_MESSAGE_LIST';
 export interface IState {
   openid: string;
   userid: string;
   userMsg: type.IStudent | null;
+  userList: type.IStudent[];
 }
 
 // initial state
@@ -20,6 +21,7 @@ const state: IState = {
   openid: localStorage.getItem('openid') || '',
   userid: '',
   userMsg: null,
+  userList: [],
 };
 
 // getters
@@ -31,7 +33,8 @@ const getters = {
 const actions = {
   async fetchOpenId({ commit }: ActionContext<IState, any>) {
     if (!/code=([^&]+)/.test(location.search) || !RegExp.$1) {
-      console.warn('当前没有code，不执行获取openid接口');
+      console.error('当前没有code，不执行获取openid接口');
+      // alert('当前没有code，不执行获取openid接口');
       return;
     }
     const code = RegExp.$1;
@@ -58,7 +61,7 @@ const actions = {
     }
     const { data: {data: {list}} } = await apiStu.getStudentList({
       page: 1,
-      limit: 5,
+      limit: 50,
       query: {
         openId: state.openid,
       },
@@ -68,8 +71,21 @@ const actions = {
       return;
     }
     const [first] = list;
+    commit(ADD_USER_MESSAGE_LIST, list);
     if (!first) { return; }
+    commit(ADD_USERID, first._id);
+    commit(ADD_USER_MESSAGE, first);
+  },
 
+
+  onChangeUser({ commit, state }: ActionContext<IState, any>, id: string) {
+    const find = state.userList.filter((item) => item._id === id);
+    if (!find || !find.length) {
+      return;
+    }
+
+    const [first] = find;
+    if (!first) { return; }
     commit(ADD_USERID, first._id);
     commit(ADD_USER_MESSAGE, first);
   },
@@ -85,6 +101,9 @@ const mutations = {
   },
   [ADD_USER_MESSAGE](state: IState, user: type.IStudent) {
     state.userMsg = user;
+  },
+  [ADD_USER_MESSAGE_LIST](state: IState, list: type.IStudent[]) {
+    state.userList = list;
   },
 };
 
