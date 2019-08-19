@@ -19,7 +19,7 @@
           </mu-list-item-action>
           <mu-list-item-title>{{item.title}}</mu-list-item-title>
           <mu-list-item-action v-if="item.id === userid">
-            <mu-icon value="done_outline" color="red"></mu-icon>
+            <mu-icon value="done_outline" color="green"></mu-icon>
             
           </mu-list-item-action>
         </mu-list-item>

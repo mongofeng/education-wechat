@@ -9,10 +9,11 @@
             <div class="value">{{stu.value}}</div>
           </mu-list-item>
         </mu-list>
-
       </mu-expansion-panel>
 
+
     </div>
+    <div class="no-data" v-if="!list.length"></div>
   </div>
 </template>
 <script lang="ts">
