@@ -51,7 +51,7 @@ type ITab = Pick<view.IMenu, 'icon' | 'title'>;
 const someModule = namespace('oauth');
 @Component
 export default class Personal extends Vue {
-  @someModule.State('userMsg') public userMsg!: type.IStudent;
+  @someModule.Getter('userMsg') public userMsg!: type.IStudent;
   @someModule.State('userid') public userid!: string;
   @someModule.Getter('openid') public openid!: string;
 

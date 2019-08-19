@@ -7,12 +7,10 @@ import { ActionContext } from 'vuex';
 const ADD_OPENID = 'ADD_OPENID';
 export const ADD_USERID = 'ADD_USERID';
 
-const ADD_USER_MESSAGE = 'ADD_USER_MESSAGE';
 const ADD_USER_MESSAGE_LIST = 'ADD_USER_MESSAGE_LIST';
 export interface IState {
   openid: string;
   userid: string;
-  userMsg: type.IStudent | null;
   userList: type.IStudent[];
 }
 
@@ -20,13 +18,24 @@ export interface IState {
 const state: IState = {
   openid: localStorage.getItem('openid') || '',
   userid: '',
-  userMsg: null,
   userList: [],
 };
 
 // getters
 const getters = {
   openid: (state: IState) => state.openid,
+  userMsg: (state: IState) => {
+    if (!state.userid) {
+      return {};
+    }
+    const find = state.userList.filter((item) => item._id === state.userid);
+    if (!find || !find.length) {
+      return {};
+    }
+
+    const [first] = find;
+    return first ? first : {};
+  },
   userListMsg: (state: IState) => {
     return state.userList.reduce((initVal: {[key in string]: string}, item) => {
       initVal[item._id] = item.name;
@@ -48,13 +57,6 @@ const actions = {
       code,
     });
 
-    // {
-    //   access_token: "21_PfvmJCQ0lfGVhF2_rT-Cc44OOZ2snNM52iDKBOwl0CRAsc4BlqwiTQmuEwg5fa1UrJLe4G3Adny27h1kcGbPag",
-    //   expires_in: 7200,
-    //   refresh_token: "21_paF-7xYUSMPWbLpZG7bYod9w9LKRUUuvXmE8axVF5uJ-I-RGr5N3dqpqidAy4cw58MA0HaG1mQmsQr1_pp8q7Q",
-    //   openid: "oVB5OwyVDKfTZq4T61_p2roSg1tA",
-    //   scope: "snsapi_base"}
-    console.log(data);
     localStorage.setItem('openid', data.openid);
     localStorage.setItem('wechat', JSON.stringify(data));
     commit(ADD_OPENID, data.openid);
@@ -76,11 +78,12 @@ const actions = {
       console.warn('当前openid没有绑定');
       return;
     }
-    const [first] = list;
     commit(ADD_USER_MESSAGE_LIST, list);
+    const [first] = list;
     if (!first) { return; }
-    commit(ADD_USERID, first._id);
-    commit(ADD_USER_MESSAGE, first);
+    if (!state.userid) {
+      commit(ADD_USERID, first._id);
+    }
   },
 
 
@@ -93,7 +96,6 @@ const actions = {
     const [first] = find;
     if (!first) { return; }
     commit(ADD_USERID, first._id);
-    commit(ADD_USER_MESSAGE, first);
   },
 };
 
@@ -104,9 +106,6 @@ const mutations = {
   },
   [ADD_USERID](state: IState, userid: string) {
     state.userid = userid;
-  },
-  [ADD_USER_MESSAGE](state: IState, user: type.IStudent) {
-    state.userMsg = user;
   },
   [ADD_USER_MESSAGE_LIST](state: IState, list: type.IStudent[]) {
     state.userList = list;

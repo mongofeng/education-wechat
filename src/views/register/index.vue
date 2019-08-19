@@ -124,6 +124,7 @@ export default class Register extends Vue {
       openId: this.openid,
     });
 
+    // 更新绑定的用户列表
     await this.fetchUserId();
 
     this.$toast.success('绑定成功');
