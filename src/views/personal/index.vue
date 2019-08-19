@@ -12,20 +12,26 @@
 
 
       <mu-list class="bg-white">
+        <mu-sub-header>学员列表</mu-sub-header>
         <mu-list-item button :ripple="false" v-for="item in options" :key="item.id" @click="onSelect(item.id)">
           <mu-list-item-action>
             <mu-icon :value="item.icon"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-title>{{item.title}}</mu-list-item-title>
           <mu-list-item-action v-if="item.id === userid">
-            <mu-icon value="star" color="red"></mu-icon>
+            <mu-icon value="done_outline" color="red"></mu-icon>
+            
           </mu-list-item-action>
         </mu-list-item>
+      </mu-list>
+      <mu-divider></mu-divider>
+      <mu-list class="bg-white">
+        <mu-sub-header>操作</mu-sub-header>
         <mu-list-item button :ripple="false" to="/register" key="student-package">
-          <mu-list-item-action>
-            <mu-icon value="mail"></mu-icon>
-          </mu-list-item-action>
           <mu-list-item-title>绑定新学员</mu-list-item-title>
+          <mu-list-item-action>
+            <mu-icon value="add"></mu-icon>
+          </mu-list-item-action>
         </mu-list-item>
       </mu-list>
     </div>

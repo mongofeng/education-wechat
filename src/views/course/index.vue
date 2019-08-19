@@ -103,14 +103,22 @@ export default class Course extends Vue {
     for (const item of list) {
       const { name, startTime, endTime } = item;
       for (const key of item.day) {
-        const endDate = new Date(item.endDate);
+
         if (monday) {
                 const currentDate  = new Date(monday.getTime());
                 const  offset = (key -  1) >=  0 ? (key -  1) : 6;
                 currentDate.setDate(currentDate.getDate() + offset);
 
+                // 结束日期少于对应的那天的不展示
+                const endDate = new Date(item.endDate);
                 if (endDate.getTime() < currentDate.getTime()) {
                     continue;
+                }
+
+                // 开始日期大于对应那天的不展示
+                const startDate = new Date(item.startDate);
+                if (startDate.getTime() > currentDate.getTime()) {
+                   continue;
                 }
             }
         if (result[key][item.time].length) {

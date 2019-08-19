@@ -26,7 +26,7 @@ const router = new Router({
       name: 'home',
       component: Home,
       redirect: {
-        name: 'hour',
+        name: 'personal',
       },
       children: [
         {
@@ -81,7 +81,7 @@ const router = new Router({
           name: 'personal',
           meta: {
             title: '个人中心',
-            depth: 6,
+            depth: 7,
           },
           component: Personal,
         },
@@ -92,7 +92,7 @@ const router = new Router({
       name: 'register',
       meta: {
         title: '绑定用户',
-        depth: 7,
+        depth: 8,
       },
       component: Register,
     },
@@ -102,7 +102,7 @@ const router = new Router({
       component: StudentPackage,
       meta: {
         title: '课程包',
-        depth: 8,
+        depth: 9,
       },
     },
     {
@@ -112,7 +112,7 @@ const router = new Router({
       props: true,
       meta: {
         title: '课时详情',
-        depth: 9,
+        depth: 10,
       },
     },
   ],

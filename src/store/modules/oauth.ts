@@ -27,6 +27,12 @@ const state: IState = {
 // getters
 const getters = {
   openid: (state: IState) => state.openid,
+  userListMsg: (state: IState) => {
+    return state.userList.reduce((initVal: {[key in string]: string}, item) => {
+      initVal[item._id] = item.name;
+      return initVal;
+    }, {});
+  },
 };
 
 // actions

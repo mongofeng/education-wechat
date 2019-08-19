@@ -15,18 +15,23 @@
       </mu-container>
 
       <mu-list class="bg-white">
+        <mu-sub-header>学员信息</mu-sub-header>
         <mu-list-item button :ripple="false" v-for="item in options" :key="item.icon">
           <mu-list-item-action>
             <mu-icon :value="item.icon"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-title>{{item.title}}</mu-list-item-title>
         </mu-list-item>
+      </mu-list>
 
+      <mu-divider></mu-divider>
+      <mu-list class="bg-white">
+        <mu-sub-header>操作</mu-sub-header>
         <mu-list-item button :ripple="false" to="/student-package" key="student-package">
-          <mu-list-item-action>
-            <mu-icon value="mail"></mu-icon>
-          </mu-list-item-action>
           <mu-list-item-title>课程包明细</mu-list-item-title>
+          <mu-list-item-action>
+            <mu-icon value="subdirectory_arrow_right"></mu-icon>
+          </mu-list-item-action>
         </mu-list-item>
       </mu-list>
     </div>

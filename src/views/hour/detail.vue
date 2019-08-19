@@ -21,9 +21,11 @@ import * as api from '@/api/hour';
 import * as enums from '@/const/enum';
 import formatDate from '@/utils/format-date';
 import { IHour } from '@/const/type/hour';
-
+import { namespace } from 'vuex-class';
+const someModule = namespace('oauth');
 @Component
 export default class HourDetail extends Vue {
+  @someModule.Getter('userListMsg') public userListMsg!: {[key in string]: string};
   @Prop()
   public id!: string;
 
@@ -39,12 +41,13 @@ export default class HourDetail extends Vue {
   }
 
 
-  public getFields(arr: any) {
+  public getFields(arr: IHour) {
     const fileds = {
-      createDate: {
-        label: '创建时间',
-        value: arr.createDate ? formatDate(new Date(arr.createDate)) : '-',
+      name: {
+        label: '学员',
+        value: this.userListMsg[arr.studentId],
       },
+
       type: {
         label: '课时类型',
         value: (enums.COURSE_HOUR_ACTION_TYPE_LABEL as any)[arr.type],
@@ -61,6 +64,10 @@ export default class HourDetail extends Vue {
           return `${item.name}:${item.count}课时`;
         }),
         array: true,
+      },
+      createDate: {
+        label: '创建时间',
+        value: arr.createDate ? formatDate(new Date(arr.createDate)) : '-',
       },
       desc: {
         label: '备注',

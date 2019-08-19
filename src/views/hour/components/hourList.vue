@@ -27,7 +27,7 @@
       </mu-list>
     </mu-load-more>
 
-    <div class="no-data" v-else></div>
+    <div class="no-data" v-if="!loading && !list.length"></div>
   </mu-container>
 </template>
 <script lang="ts">
@@ -82,6 +82,7 @@ export default class HourList extends Vue {
   @Watch('userid', {immediate: true})
   public onUserIdChange(val: string) {
     if (!val) { return; }
+    console.log('userid发生改变，获取课时数据');
     this.fetchData(true);
   }
 
