@@ -97,6 +97,10 @@ export default class Register extends Vue {
     if (!val.value) {
       return;
     }
+    if (!this.openid) {
+      alert('获取不到微信用户的信息,请重新登录');
+      return;
+    }
     const result = this.list.filter((item) => item._id === val.value);
     if (!result || !result.length) {
       return;
