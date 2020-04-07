@@ -11,5 +11,13 @@ export function fetchOpenId(params: type.ICode): AxiosPromise<type.IOpenId> {
 }
 
 export function fetchUserInfo(params: type.IInfo): AxiosPromise<type.IUserInfo> {
-  return http.post('userInfo', params);
+  return http.post('wechat/userInfo', params);
 }
+
+
+export function openIdLogin(params: {
+  openId: string,
+}): AxiosPromise<{data: string}> {
+  return http.post('auth/openId', params);
+}
+

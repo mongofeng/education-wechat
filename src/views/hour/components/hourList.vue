@@ -72,7 +72,7 @@ export default class HourList extends Vue {
 
     if (this.type && this.type !== 'all') {
       condition.query.type = {
-        $eq: this.type,
+        $eq: +this.type,
       };
     }
 

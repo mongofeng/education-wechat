@@ -3,6 +3,7 @@ import * as api from '@/api/wechat';
 import * as apiStu from '@/api/student';
 import * as type from '@/const/type/student';
 import { ActionContext } from 'vuex';
+import { accessTokenName } from '@/utils/http';
 
 const ADD_OPENID = 'ADD_OPENID';
 export const ADD_USERID = 'ADD_USERID';
@@ -59,6 +60,8 @@ const actions = {
 
     localStorage.setItem('openid', data.openid);
     localStorage.setItem('wechat', JSON.stringify(data));
+
+
     commit(ADD_OPENID, data.openid);
   },
 
@@ -67,6 +70,20 @@ const actions = {
       console.error('必须要有openid才可以获取userId');
       return;
     }
+
+    const ret = await api.openIdLogin({
+      openId: state.openid,
+    });
+
+
+
+    console.log(ret.data.data);
+
+    window.localStorage.setItem(
+      accessTokenName,
+      ret.data.data,
+    );
+
     const { data: {data: {list}} } = await apiStu.getStudentList({
       page: 1,
       limit: 50,
@@ -78,6 +95,11 @@ const actions = {
       console.warn('当前openid没有绑定');
       return;
     }
+
+
+
+
+    console.log(ret);
     commit(ADD_USER_MESSAGE_LIST, list);
     const [first] = list;
     if (!first) { return; }

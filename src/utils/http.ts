@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 
-const accessTokenName = 'Authorization';
+export const accessTokenName = 'Authorization';
 
 // const codeMessage = {
 //   200: '服务器成功返回请求的数据。',

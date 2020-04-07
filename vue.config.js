@@ -29,6 +29,14 @@ module.exports = {
           '^/wechatServer': process.env.IS_DEV === 'true' ? '/wechat' : '/wechatServer',
         },
       },
+      '/v1': {
+        target: process.env.API,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: { // 改变路径重定向
+          '^/v1': '/',
+        },
+      },
       
     }
   },

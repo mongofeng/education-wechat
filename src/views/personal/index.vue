@@ -90,9 +90,13 @@ export default class Personal extends Vue {
 
 
   public async fetchUserInfo() {
-    const {data} = await apiWechat.fetchUserInfo({
+    let {data} = await apiWechat.fetchUserInfo({
       openid: this.openid,
     });
+
+    if ((data  as any).data) {
+      data = (data  as any).data
+    }
     this.headimgurl = data.headimgurl;
     this.nickName = data.nickname;
     this.sex = data.sex;
