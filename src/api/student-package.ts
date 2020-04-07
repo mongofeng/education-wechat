@@ -18,7 +18,7 @@ export function addStudentPackage(params: IStudentPackage) {
  * @param params 查询参数
  */
 export function getStudentPackageList(params: any): ApiListData<IStudentPackage> {
-    return http.post('student-package/list', params);
+    return http.post('student-package/list-all', params);
 }
 
 /**
