@@ -95,7 +95,7 @@ export default class Personal extends Vue {
     });
 
     if ((data  as any).data) {
-      data = (data  as any).data
+      data = (data  as any).data;
     }
     this.headimgurl = data.headimgurl;
     this.nickName = data.nickname;

@@ -21,20 +21,20 @@ module.exports = {
 
   devServer: {
     proxy: {
-      '/wechatServer': {
+      '/wechatV2': {
         target: process.env.API,
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向
-          '^/wechatServer': process.env.IS_DEV === 'true' ? '/wechat' : '/wechatServer',
+          '^/wechatV2': '/wechat',
         },
       },
-      '/v1': {
+      '/v2': {
         target: process.env.API,
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向
-          '^/v1': '/',
+          '^/v2': '/',
         },
       },
       
