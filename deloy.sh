@@ -14,7 +14,7 @@ build_path=dist
 
 
 echo 开始打包的操作
-npm run build
+npm run build-sit
 
 if [ $? -eq 0 ]; then
     echo "编译成功"
