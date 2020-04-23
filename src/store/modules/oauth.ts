@@ -54,9 +54,13 @@ const actions = {
       return;
     }
     const code = RegExp.$1;
-    const { data } = await api.fetchOpenId({
+    let { data } = await api.fetchOpenId({
       code,
     });
+
+    if ((data  as any).data) {
+      data = (data  as any).data;
+    }
 
     localStorage.setItem('openid', data.openid);
     localStorage.setItem('wechat', JSON.stringify(data));
