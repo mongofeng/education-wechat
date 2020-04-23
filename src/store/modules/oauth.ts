@@ -9,10 +9,13 @@ const ADD_OPENID = 'ADD_OPENID';
 export const ADD_USERID = 'ADD_USERID';
 
 const ADD_USER_MESSAGE_LIST = 'ADD_USER_MESSAGE_LIST';
+
+const ADD_TOKEN = 'ADD_TOKEN';
 export interface IState {
   openid: string;
   userid: string;
   userList: type.IStudent[];
+  token: string;
 }
 
 // initial state
@@ -20,6 +23,7 @@ const state: IState = {
   openid: localStorage.getItem('openid') || '',
   userid: '',
   userList: [],
+  token: '',
 };
 
 // getters
@@ -83,10 +87,13 @@ const actions = {
 
     console.log(ret.data.data);
 
+
     window.localStorage.setItem(
       accessTokenName,
       ret.data.data,
     );
+
+    commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
 
     const { data: {data: {list}} } = await apiStu.getStudentList({
       page: 1,
@@ -135,6 +142,9 @@ const mutations = {
   },
   [ADD_USER_MESSAGE_LIST](state: IState, list: type.IStudent[]) {
     state.userList = list;
+  },
+  [ADD_TOKEN](state: IState, s: string) {
+    state.token = s;
   },
 };
 

@@ -57,6 +57,8 @@ export default class Personal extends Vue {
   @someModule.Getter('openid') public openid!: string;
   @someModule.Action('onChangeUser') public onChangeUser!: (id: string) => void;
 
+  @someModule.State('token') public token!: string;
+
   private headimgurl: string = '~@/assets/images/uicon.jpg';
   private nickName: string = '';
   private sex: number = 1;
@@ -82,7 +84,7 @@ export default class Personal extends Vue {
     // this.fetchTotalHours();
   }
 
-  @Watch('openid', {immediate: true})
+  @Watch('token', {immediate: true})
   public onopenidChange(val: string) {
     if (!val) { return; }
     this.fetchUserInfo();
