@@ -17,7 +17,10 @@ export function fetchUserInfo(params: type.IInfo): AxiosPromise<type.IUserInfo> 
 
 export function openIdLogin(params: {
   openId: string,
-}): AxiosPromise<{data: string}> {
+}): AxiosPromise<{data: {
+  token: string;
+  openid: string
+}}> {
   return http.post('auth/openId', params);
 }
 

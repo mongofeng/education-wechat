@@ -58,19 +58,41 @@ const actions = {
       return;
     }
     const code = RegExp.$1;
-    let { data } = await api.fetchOpenId({
-      code,
+    // let { data } = await api.fetchOpenId({
+    //   code,
+    // });
+
+    // if ((data  as any).data) {
+    //   data = (data  as any).data;
+    // }
+
+    // localStorage.setItem('openid', data.openid);
+    // localStorage.setItem('wechat', JSON.stringify(data));
+
+
+
+    const {data: {
+      data,
+    }} = await api.openIdLogin({
+      openId: code,
     });
 
-    if ((data  as any).data) {
-      data = (data  as any).data;
-    }
 
-    localStorage.setItem('openid', data.openid);
-    localStorage.setItem('wechat', JSON.stringify(data));
+
+    console.log(data);
+
+
+    window.localStorage.setItem(
+      accessTokenName,
+      data.token,
+    );
+
+    commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
 
 
     commit(ADD_OPENID, data.openid);
+
+    localStorage.setItem('openid', data.openid);
   },
 
   async fetchUserId({ commit, state }: ActionContext<IState, any>) {
@@ -79,21 +101,24 @@ const actions = {
       return;
     }
 
-    const ret = await api.openIdLogin({
-      openId: state.openid,
-    });
+    if (!state.token) {
+      const {data: {
+        data,
+      }} = await api.openIdLogin({
+        openId: state.openid,
+      });
+      console.log(data);
+      window.localStorage.setItem(
+        accessTokenName,
+        data.token,
+      );
+
+      commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
+    }
 
 
 
-    console.log(ret.data.data);
 
-
-    window.localStorage.setItem(
-      accessTokenName,
-      ret.data.data,
-    );
-
-    commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
 
     const { data: {data: {list}} } = await apiStu.getStudentList({
       page: 1,
@@ -108,9 +133,6 @@ const actions = {
     }
 
 
-
-
-    console.log(ret);
     commit(ADD_USER_MESSAGE_LIST, list);
     const [first] = list;
     if (!first) { return; }
