@@ -101,20 +101,20 @@ const actions = {
       return;
     }
 
-    if (!state.token) {
-      const {data: {
-        data,
-      }} = await api.openIdLogin({
-        openId: state.openid,
-      });
-      console.log(data);
-      window.localStorage.setItem(
-        accessTokenName,
-        data.token,
-      );
+    // if (!state.token) {
+    //   const {data: {
+    //     data,
+    //   }} = await api.openIdLogin({
+    //     openId: state.openid,
+    //   });
+    //   console.log(data);
+    //   window.localStorage.setItem(
+    //     accessTokenName,
+    //     data.token,
+    //   );
 
-      commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
-    }
+    //   commit(ADD_TOKEN, localStorage.getItem(accessTokenName));
+    // }
 
 
 

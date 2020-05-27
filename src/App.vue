@@ -32,12 +32,8 @@ export default class App extends Mixins(TransitionRoute) {
     this.init();
   }
   private async init() {
-    if (this.openid) {
-      await this.fetchUserId();
-    } else {
-      await this.fetchOpenId();
-      await this.fetchUserId();
-    }
+    await this.fetchOpenId();
+    await this.fetchUserId();
 
     if (!this.userid) {
       this.$router.replace({
