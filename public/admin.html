@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>yangjinart</title>
 </head>
+
 <body>
-  
+
 </body>
 
 <script>
@@ -21,8 +23,8 @@
 
 
 <script>
-  
-  function Http (params) {
+
+  function Http(params) {
     var method = params.params
     var url = params.url
     var cb = params.cb
@@ -46,8 +48,8 @@
     http.send(data)
   }
 
-  function query2Obj (query) {
-    return query.split('&').reduce(function(intV, i) {
+  function query2Obj(query) {
+    return query.split('&').reduce(function (intV, i) {
       var arr = i.split('=')
       if (arr[0] && arr[1]) {
         intV[arr[0]] = arr[1]
@@ -57,16 +59,16 @@
   }
 
 
-  function getQuery () {
+  function getQuery() {
     var href = location.href
     return href.slice(href.indexOf('?') + 1)
   }
 
 
-  var baseURl = '/wechat/'
+  var baseURl = '/wechatServer/'
 
 
-  function openIdLogin (data, cb ) {
+  function openIdLogin(data, cb) {
     return Http(
       {
         cb: cb,
@@ -75,7 +77,30 @@
         url: baseURl + 'auth/openId'
       }
     )
-    
+  }
+
+
+  function addOpenId(data, cb) {
+    return Http(
+      {
+        cb: cb,
+        data: data,
+        method: "POST",
+        url: baseURl + 'admin-wechat'
+      }
+    )
+  }
+
+
+  function getAdminWechatList(data, cb) {
+    return Http(
+      {
+        cb: cb,
+        data: data,
+        method: "POST",
+        url: baseURl + 'admin-wechat/list'
+      }
+    )
   }
 
  // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bb9b35bb6d4f980&redirect_uri=http%3A%2F%2Fyangjin-art.top%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_userinfo&state=STATE1111#wechat_redirect
@@ -85,19 +110,47 @@
 
 
 <script>
-  
-var openId = ''
-var nickname = ''
-openIdLogin({code: obj.code}, function (data) {
-  console.log(data)
-  openId = data.openid
-  nickname = data.nickname
-  localStorage.setItem('openid', data.openid);
-  window.localStorage.setItem(
+
+  var openId = ''
+  var nickname = ''
+  openIdLogin({ code: obj.code }, function (data) {
+    console.log(data)
+    openId = data.openid
+    nickname = data.nickname
+    localStorage.setItem(openIdName, data.openid);
+    window.localStorage.setItem(
       accessTokenName,
       data.token,
     );
-})
+
+
+
+
+    // // 获取是否绑定
+    // getAdminWechatList({
+    //   page: 1,
+    //   limit: 5,
+    //   query: {
+    //     openId: openId
+    //   },
+    // }, function (ret) {
+    //   if (ret.count > 0) {
+    //     return;
+    //   }
+
+
+    //   // 绑定微信
+    //   addOpenId({
+    //     openId: openId,
+    //     name: nickname
+    //   }, function (result) {
+    //     console.log(result)
+    //   })
+    // })
+
+
+  })
 
 </script>
+
 </html>
