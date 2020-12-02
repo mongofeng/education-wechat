@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yangjinart</title>
+</head>
+<body>
+  
+</body>
+
+<script>
+  var accessTokenName = 'admin'
+  var openIdName = 'admin-openid'
+  var obj = query2Obj(getQuery());
+  var code = obj.code
+  var token = obj.state
+  localStorage.setItem(accessTokenName, token)
+</script>
+
+
+
+<script>
+  
+  function Http (params) {
+    var method = params.params
+    var url = params.url
+    var cb = params.cb
+    var data = params.data
+    var token = params.token || localStorage.getItem(accessTokenName)
+
+    var http = new XMLHttpRequest();
+    http.onreadystatechange = function (start) {
+      if (http.readyState == 4 && http.status == 200) {
+        var ret = http.responseText
+        if (typeof ret == 'string') {
+          ret = JSON.parse(ret)
+        }
+        cb(ret)
+      }
+    }
+    // POST请求需要设置此参数
+    http.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+    http.setRequestHeader('Authorization', token)
+    http.open(method, url, true)
+    http.send(data)
+  }
+
+  function query2Obj (query) {
+    return query.split('&').reduce(function(intV, i) {
+      var arr = i.split('=')
+      if (arr[0] && arr[1]) {
+        intV[arr[0]] = arr[1]
+      }
+      return intV;
+    }, {})
+  }
+
+
+  function getQuery () {
+    var href = location.href
+    return href.slice(href.indexOf('?') + 1)
+  }
+
+
+  var baseURl = '/wechat/'
+
+
+  function openIdLogin (data, cb ) {
+    return Http(
+      {
+        cb: cb,
+        data: data,
+        method: "POST",
+        url: baseURl + 'auth/openId'
+      }
+    )
+    
+  }
+
+ // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9bb9b35bb6d4f980&redirect_uri=http%3A%2F%2Fyangjin-art.top%2Fwechat%2F%23%2F&response_type=code&scope=snsapi_userinfo&state=STATE1111#wechat_redirect
+
+
+</script>
+
+
+<script>
+  
+var openId = ''
+var nickname = ''
+openIdLogin({code: obj.code}, function (data) {
+  console.log(data)
+  openId = data.openid
+  nickname = data.nickname
+  localStorage.setItem('openid', data.openid);
+  window.localStorage.setItem(
+      accessTokenName,
+      data.token,
+    );
+})
+
+</script>
+</html>
