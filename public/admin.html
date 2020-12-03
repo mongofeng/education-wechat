@@ -602,13 +602,15 @@
     <h2>微信号已经绑定</h2>
   </div>
 
-  <!-- <div class="status-icon sa-error animateErrorIcon" style="display: block;">
-    <span class="sa-x-mark animateXMark">
-      <span class="sa-line sa-left"></span>
-      <span class="sa-line sa-right"></span>
-    </span>
-  </div>
-  <h2>错误</h2> -->
+  <!-- <div id="error" class="hide">
+    <div class="status-icon sa-error animateErrorIcon" style="display: block;">
+      <span class="sa-x-mark animateXMark">
+        <span class="sa-line sa-left"></span>
+        <span class="sa-line sa-right"></span>
+      </span>
+    </div>
+    <h2>js错误</h2>
+  </div> -->
 
 </body>
 <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script> -->
@@ -628,8 +630,6 @@
   localStorage.setItem(accessTokenName, token)
 
 
-
-  // http://yangjin-art.top/wechat/admin.html?code=011CeoGa1jHb6A0G7aIa1rlcyo4CeoGv&state=yangjinart
   function Http(params) {
     var method = params.method || 'POST'
     var url = params.url
@@ -777,9 +777,21 @@
         })
       })
     })
-
-
   })
+
+
+  window.onerror = function (e) {
+    console.log(e)
+  }
+
+  window.addEventListener('unhandledrejection', function (e) {
+    console.log(e)
+  }, false)
+
+
+// loading: https://www.jianshu.com/p/b22cbc1c6c40
+// 提示： https://www.jq22.com/webqd1076
+
 </script>
 
 
