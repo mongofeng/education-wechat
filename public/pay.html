@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <link href="https://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/index.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 100%;
+        overflow: auto;
+      }
+    </style>
+
+    <body>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="jumbotron">
+                        <h1>支付演示</h1>
+                        <p>微信支付官方开发文档：<a target="_blank" href="https://pay.weixin.qq.com/wiki/doc/api/index.html">https://pay.weixin.qq.com/wiki/doc/api/index.html</a></p>
+                        <p>支付宝官方开发文档：<a target="_blank" href="https://docs.open.alipay.com/catalog">https://docs.open.alipay.com/catalog</a></p>
+                    </div>
+                    <form role="form" id="payForm">
+                        <div class="form-group">
+                            <label for="orderId">订单号</label>
+                            <input type="text" class="form-control" id="orderId" name="orderId"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">金额</label>
+                            <input type="text" value="0.01" class="form-control" id="amount" name="amount"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">支付方式</label>
+                            <select class="form-control" id="payType" value="WXPAY_MP">
+                                <option value="ALIPAY_PC">支付宝PC</option>
+                                <option value="ALIPAY_WAP">支付宝WAP</option>
+                                <option value="ALIPAY_H5">支付宝H5</option>
+                                <option value="WXPAY_NATIVE">微信Native支付</option>
+                                <option value="WXPAY_MWEB">微信H5支付</option>
+                                <option value="WXPAY_MP">微信公众号支付</option>
+                                <option value="WXPAY_MINI">微信小程序支付</option>
+                                <option value="WXPAY_APP">微信APP支付</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="openidForm">
+                            <label for="openid">openid</label>
+                            <input type="text" class="form-control" id="openid" name="openid"/>
+                        </div>
+                        <div class="form-group" id="buyerLogonIdForm" hidden>
+                            <label for="buyerLogonId">买家支付宝账号（和buyer_id不能同时为空）</label>
+                            <input type="text" class="form-control" id="buyerLogonId" name="buyerLogonId"/>
+                        </div>
+                        <div class="form-group" id="buyerIdForm" hidden>
+                            <label for="buyerId">买家的支付宝唯一用户号（2088开头的16位纯数字）</label>
+                            <input type="text" class="form-control" id="buyerId" name="buyerId"/>
+                        </div>
+                        <button type="submit" onclick="" class="btn btn-default">提交</button>
+                    </form>
+                    <h5>响应结果</h5>
+                    <pre id="response"></pre>
+                    <h5>结果处理</h5>
+                    <div id="result"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="bs-docs-footer">
+            <div class="container">
+                <p>获取本站源码，请访问<a href="https://github.com/Pay-Group/best-pay-sdk" target="_blank">best-pay-sdk</a></p>
+            </div>
+        </footer>
+    </body>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
+    <script>
+      const vConsole = new VConsole();
+
+function toCreate (payResponse) {
+            function onBridgeReady(){
+              console.log('进行支付')
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+                        "appId":payResponse.appId,     //公众号名称，由商户传入
+                        "timeStamp":payResponse.timeStamp,         //时间戳，自1970年以来的秒数
+                        "nonceStr":payResponse.nonceStr, //随机串
+                        "package":payResponse.package,
+                        "signType":"MD5",         //微信签名方式：
+                        "paySign":payResponse.paySign //微信签名
+                    },
+                    function(res){
+                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                            alert('支付成功');
+                        }else if(res.err_msg == "get_brand_wcpay_request:cancel") {
+                            alert('支付过程中用户取消');
+                        }else if(res.err_msg == "get_brand_wcpay_request:fail") {
+                            alert('支付失败');
+                        }else {
+                            alert('未知异常');
+                        }
+                    }
+                );
+            }
+
+            console.log('weixinJs', WeixinJSBridge)
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+            }else{
+                onBridgeReady();
+            }    
+        }
+
+
+        $(function () {
+            genOrderId()
+
+            //选择支付方式
+            $("#payType").change(function (e) {
+                genOrderId()
+                $("#response").html('')
+                $('#result').html('')
+                $("#openid").val('')
+
+                var payType = $("#payType").val()
+                //为公众号和小程序支付设置openid
+                if (payType == 'WXPAY_MINI') {
+                    $("#openid").val('oGKfg52WhhbxoeHlL1U-mHelZkOc')
+                }else if (payType == 'WXPAY_MP') {
+                    $("#openid").val('oGKfg52WhhbxoeHlL1U-mHelZkOc')
+                }else if (payType == 'ALIPAY_H5') {
+                    $("#openidForm").hide()
+                    $("#buyerLogonIdForm").show()
+                    $("#buyerIdForm").show()
+                }
+            })
+
+            $("form").submit(function(e){
+                var data = {
+                    orderId: $("#orderId").val(),
+                    amount: $("#amount").val(),
+                    payType: $("#payType").val(),
+                    openid: $("#openid").val(),
+                    buyerLogonId: $("#buyerLogonId").val(),
+                    buyerId: $("#buyerId").val()
+                };
+                $.ajax({
+                    type:'post',
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    url:'http://9g52fr.natappfree.cc/pay',
+                    data:JSON.stringify(data),
+                    success:function(response){
+                        //支付宝会跳转, 不要显示
+                        if (($("#payType").val() != 'ALIPAY_PC')&&($("#payType").val() != 'ALIPAY_WAP')) {
+                            $('#response').html(JSON.stringify(response, null, "\t"))
+                        }
+
+                        //根据支付方式处理
+                        switch($("#payType").val()) {
+                            case 'WXPAY_MWEB':
+                                $('#result').html('结果是 ' + response.mwebUrl + '<br />'
+                                    + '由于微信H5支付会校验referer, 也就是商户平台申请h5支付时会填写的产品域名<br />'
+                                    + '所以这里做了个重定向, 请复制链接<strong>用手机浏览器打开</strong><br />'
+                                    + response.mwebUrl.replace('https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb', 'http://' + document.domain + '/wxpay_mweb_redirect'));
+                                break
+                            case 'WXPAY_NATIVE':
+                                $('#result').qrcode(response.codeUrl)
+                                break
+                            case 'WXPAY_MP':
+                            case 'WXPAY_MINI':
+                            toCreate(response.data)
+                                $('#result').html('小程序/公众号支付，需要openid参数，暂时无法体验发起支付')
+                                break
+                            case 'WXPAY_APP':
+                                $('#result').html('app支付需由android/ios端发起')
+                                break
+                            case 'ALIPAY_PC':
+                                console.log(response.body)
+                                $('#result').html(response.body)
+                                break
+                            case 'ALIPAY_WAP':
+                                console.log(response.body)
+                                $('#result').html(response.body)
+                                break
+                            case 'ALIPAY_H5':
+                                console.log(response.body)
+                                $('#result').html("h5发起支付文档 https://myjsapi.alipay.com/alipayjsapi/util/pay/tradePay.html")
+                                break
+                        }
+                    },
+                    error:function(response){
+                        $('#response').text(JSON.stringify(response, null, "\t"))
+                    }
+                });
+                return false;
+            });
+
+            //随机生成订单号
+            function genOrderId() {
+                $('#orderId').val(new Date().getTime() + String(Math.floor(Math.random() * (999999 - 100000 + 1) + 100000)));
+            }
+        });
+    </script>
+</html>
